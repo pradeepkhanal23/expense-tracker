@@ -1,0 +1,17 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Expense tracker backend service",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "watch": "nodemon index.js"
+  },
+  "author": "Pradeep Khanal",
+  "license": "ISC",
+  "dependencies": {
+    "@apollo/server": "^4.10.5",
+    "dotenv": "^16.4.5",
+    "graphql": "^16.9.0"
+  }
+}
