@@ -5,8 +5,7 @@ import Dashboard from "./pages/dashboard";
 function App() {
   return (
     <>
-      {/* <AuthTabs /> */}
-      <Dashboard />
+      <h1>App</h1>
     </>
   );
 }
