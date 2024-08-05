@@ -14,7 +14,7 @@ const userSchema = new Schema(
     // Remember to hash passwords before saving
     password: { type: String, required: true },
     // Reference to Expense model
-    expenses: [{ type: mongoose.Schema.Types.ObjectId, ref: "Expense" }],
+    expenses: [{ type: Schema.Types.ObjectId, ref: "Expense" }],
   },
   {
     toJSON: {
@@ -29,7 +29,6 @@ userSchema.pre("save", async function (next) {
     const saltRounds = 10;
     this.password = await bcrypt.hash(this.password, saltRounds);
   }
-
   next();
 });
 

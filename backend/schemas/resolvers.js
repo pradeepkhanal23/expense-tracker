@@ -1,5 +1,6 @@
 const { User, Expense } = require("../models");
 const { signToken, AuthenticationError } = require("../utils/auth");
+const { GraphQLError } = require("graphql");
 
 const resolvers = {
   Query: {
@@ -56,15 +57,32 @@ const resolvers = {
       // Ensure the request is authenticated
       if (context.user) {
         try {
+          //checking if the expense with the same description is present
+          const existingExpense = await Expense.findOne({ description });
+
+          if (existingExpense) {
+            // If an expense with the same description exists, we throw an error
+            throw new GraphQLError(
+              "An expense with the same description already exists",
+              {
+                extensions: {
+                  code: "BAD_USER_INPUT",
+                },
+              }
+            );
+          }
+
           // Create a new expense and associate it with the user
           const newExpense = await Expense.create({
             description,
             amount,
             date,
             category,
-            user: context.user._id,
           });
 
+          await newExpense.save();
+
+          console.log(newExpense);
           // Add the new expense to the user's list of expenses
           await User.findOneAndUpdate(
             { _id: context.user._id },

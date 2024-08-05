@@ -1,7 +1,6 @@
 // core node modules
 const express = require("express");
 const path = require("path");
-
 // dotenv package for env file
 require("dotenv").config();
 
@@ -54,7 +53,8 @@ const startApolloServer = async () => {
 // Connecting to MongoDB and then starting the server
 connectDB().then(() => {
   app.listen(PORT, () => {
-    console.log(`Now listening on localhost:${PORT}`);
+    console.log(`🌍 Now listening on localhost:${PORT}`);
+    console.log(`Use GraphQL at http://localhost:${PORT}/graphql`);
   });
 });
 
