@@ -9,6 +9,7 @@ require("dotenv").config();
 const { typeDefs, resolvers } = require("./schemas");
 const { ApolloServer } = require("@apollo/server");
 const { expressMiddleware } = require("@apollo/server/express4");
+const { authMiddleware } = require("./utils/auth");
 
 //connection file for mongoDB/database connection
 const connectDB = require("./config/connection");
@@ -32,7 +33,12 @@ const startApolloServer = async () => {
   app.use(express.json());
 
   // contrary to traditional RESTApi sever, where we create a routes folder and pass it onto the middleware, we are using a single endpoint "graphql" and passing it to the express middleware which has a graphql server implementation (this is special express server imported from apollo to support graphql)
-  app.use("/graphql", expressMiddleware(server));
+  app.use(
+    "/graphql",
+    expressMiddleware(server, {
+      context: authMiddleware,
+    })
+  );
 
   // if we're in production, serve client/build as static assets
   if (process.env.NODE_ENV === "production") {
