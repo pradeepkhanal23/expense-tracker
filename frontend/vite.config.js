@@ -9,4 +9,15 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  server: {
+    port: 3000,
+    open: true,
+    proxy: {
+      "/graphql": {
+        target: "http://localhost:3001",
+        secure: false,
+        changeOrigin: true,
+      },
+    },
+  },
 });
