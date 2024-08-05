@@ -12,14 +12,9 @@ const typeDefs = `
     description: String!
     amount: Float!
     date: String!
-    category: Category!
+    category: String!
    }
-
-   type Category{
-    _id: ID!
-    name: String!
-   }
-
+  
    type Auth{
     token: ID!
     user: User
@@ -34,7 +29,7 @@ const typeDefs = `
     register(username: String! , email: String! , password: String!): Auth
     login(email:String! , password: String!): Auth
     addExpense(description: String!, amount: Float! , date: String!, category: String!): Expense
-    updateExpense(_id: ID!, description: String, amount:Float, date:String!): Expense
+    updateExpense(_id: ID!, description: String, amount:Float, date:String! , category: String!): Expense
     deleteExpense(_id: ID!):Expense
    }
 
