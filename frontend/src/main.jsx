@@ -1,19 +1,22 @@
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
-import App from "./App";
-import Auth from "./pages/Auth";
+import Home from "./pages/Home";
+import { Dashboard } from "./views";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Auth />,
+    element: <Home />,
     errorElement: <h1 className="display-2">Wrong page!</h1>,
     children: [
       {
         index: true,
-        path: "/auth",
-        element: <Auth />,
+        element: <Home />,
+      },
+      {
+        path: "/dashboard",
+        element: <Dashboard />,
       },
     ],
   },
