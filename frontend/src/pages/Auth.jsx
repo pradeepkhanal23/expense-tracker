@@ -14,16 +14,16 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 const Auth = () => {
   return (
     <>
-      <div className="flex items-center justify-center w-full h-screen ">
+      <div className="flex items-center justify-center w-full">
         <Tabs defaultValue="signin" className="w-[400px]">
           <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="signin">Sign In</TabsTrigger>
+            <TabsTrigger value="signin">Login In</TabsTrigger>
             <TabsTrigger value="signup">Sign Up</TabsTrigger>
           </TabsList>
           <TabsContent value="signin">
             <Card>
               <CardHeader>
-                <CardTitle>Sign In</CardTitle>
+                <CardTitle>Log In</CardTitle>
                 <CardDescription>
                   Access your account by entering your credentials.
                 </CardDescription>
@@ -43,7 +43,7 @@ const Auth = () => {
                 </div>
               </CardContent>
               <CardFooter>
-                <Button>Sign In</Button>
+                <Button>Login In</Button>
               </CardFooter>
             </Card>
           </TabsContent>
