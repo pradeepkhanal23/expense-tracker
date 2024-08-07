@@ -13,6 +13,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "@/utils/mutations";
+import AuthService from "@/utils/auth";
 
 const Auth = () => {
   const [activeTab, setActiveTab] = useState("signin");
@@ -40,13 +41,19 @@ const Auth = () => {
     e.preventDefault();
 
     try {
-      console.log(
-        await login({
-          variables: {
-            ...signinForm,
-          },
-        })
-      );
+      const { data } = await login({
+        variables: {
+          ...signinForm,
+        },
+      });
+
+      const { token } = data.login;
+      AuthService.login(token);
+
+      setSigninForm({
+        email: "",
+        password: "",
+      });
     } catch (error) {
       console.error(error);
     }

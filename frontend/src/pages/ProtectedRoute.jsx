@@ -1,17 +1,16 @@
-import Auth from "../utils/auth";
+import AuthService from "../utils/auth";
 import { Navigate } from "react-router-dom";
 
 const ProtectedRoute = ({ children }) => {
-  //pulling the loggedIn method from our auth service
-  const isLoggedIn = Auth.loggedIn();
-
-  //if the user is not logged in , we clear the token by logging out and redirecting the user to the login/signup page
+  const isLoggedIn = AuthService.loggedIn();
+  //so based on the token value present in the local storage, we give user the permission to access the dashboard
+  //if user is not loggedIn(which checks the token in storage and its validity), we clear the token and redirect the user to the login/sinup page
   if (!isLoggedIn) {
-    Auth.logout();
+    AuthService.logout();
     return <Navigate to="/auth" />;
   }
 
-  //if user is logged in, we redirect the user to the dashboard page now
+  //if user is logged in, we redirect the user to the dashboard page
   return <>{children}</>;
 };
 export default ProtectedRoute;
