@@ -3,7 +3,7 @@ import heroImg from "../assets/images/finance.jpg";
 const Hero = () => {
   return (
     <main>
-      <section className="max-w-7xl mx-auto h-full p-5 ">
+      <section className="max-w-7xl mx-auto h-full p-2 lg:p-5 ">
         <div className="container px-4 md:px-6">
           <div className="flex flex-col space-y-10 lg:flex-row md:space-x-10 ">
             <div className="flex flex-col justify-center space-y-4 flex-1">

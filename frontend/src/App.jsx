@@ -14,6 +14,7 @@ import {
   createHttpLink,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
+import ProtectedRoute from "./pages/ProtectedRoute";
 
 // it creates the HTTP link to our GraphQL server
 const httpLink = createHttpLink({
@@ -67,7 +68,11 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Dashboard />,
+        element: (
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        ),
       },
     ],
   },

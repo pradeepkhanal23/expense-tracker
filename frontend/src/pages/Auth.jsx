@@ -11,15 +11,20 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState } from "react";
+import { useMutation } from "@apollo/client";
+import { LOGIN_USER } from "@/utils/mutations";
 
 const Auth = () => {
-  const [activeTab, setActiveTab] = useState("signup");
+  const [activeTab, setActiveTab] = useState("signin");
   const [signinForm, setSigninForm] = useState({ email: "", password: "" });
   const [signupForm, setSignupForm] = useState({
     email: "",
     password: "",
     username: "",
   });
+
+  // using the useMutation hook to extract the login method
+  const [login, { loading }] = useMutation(LOGIN_USER);
 
   const handleSigninChange = (e) => {
     const { id, value } = e.target;
@@ -31,10 +36,20 @@ const Auth = () => {
     setSignupForm((prev) => ({ ...prev, [id]: value }));
   };
 
-  const handleSigninSubmit = (e) => {
+  const handleSigninSubmit = async (e) => {
     e.preventDefault();
-    // Handle signin form submission
-    console.log("Signin Form Data:", signinForm);
+
+    try {
+      console.log(
+        await login({
+          variables: {
+            ...signinForm,
+          },
+        })
+      );
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleSignupSubmit = (e) => {
@@ -155,7 +170,7 @@ const Auth = () => {
                         setActiveTab("signin");
                       }}
                     >
-                      Log In
+                      {loading ? "Loading..." : "  Log In"}
                     </button>
                   </div>
                 </CardContent>
