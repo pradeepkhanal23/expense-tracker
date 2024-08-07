@@ -10,72 +10,157 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useState } from "react";
 
 const Auth = () => {
+  const [activeTab, setActiveTab] = useState("signup");
+  const [signinForm, setSigninForm] = useState({ email: "", password: "" });
+  const [signupForm, setSignupForm] = useState({
+    email: "",
+    password: "",
+    username: "",
+  });
+
+  const handleSigninChange = (e) => {
+    const { id, value } = e.target;
+    setSigninForm((prev) => ({ ...prev, [id]: value }));
+  };
+
+  const handleSignupChange = (e) => {
+    const { id, value } = e.target;
+    setSignupForm((prev) => ({ ...prev, [id]: value }));
+  };
+
+  const handleSigninSubmit = (e) => {
+    e.preventDefault();
+    // Handle signin form submission
+    console.log("Signin Form Data:", signinForm);
+  };
+
+  const handleSignupSubmit = (e) => {
+    e.preventDefault();
+    // Handle signup form submission
+    console.log("Signup Form Data:", signupForm);
+  };
+
   return (
     <>
       <div className="flex items-center justify-center w-full">
-        <Tabs defaultValue="signin" className="w-[400px]">
+        <Tabs
+          value={activeTab}
+          // on value change prop has been passed with our state update function to make sure it changes the value on click as well
+          onValueChange={setActiveTab}
+          className="w-[400px]"
+        >
           <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="signin">Login In</TabsTrigger>
+            <TabsTrigger value="signin">Log In</TabsTrigger>
             <TabsTrigger value="signup">Sign Up</TabsTrigger>
           </TabsList>
           <TabsContent value="signin">
             <Card>
-              <CardHeader>
-                <CardTitle>Log In</CardTitle>
-                <CardDescription>
-                  Access your account by entering your credentials.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-2">
-                <div className="space-y-1">
-                  <Label htmlFor="email">Email</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="example@domain.com"
-                  />
-                </div>
-                <div className="space-y-1">
-                  <Label htmlFor="password">Password</Label>
-                  <Input id="password" type="password" placeholder="••••••••" />
-                </div>
-              </CardContent>
-              <CardFooter>
-                <Button>Login In</Button>
-              </CardFooter>
+              <form onSubmit={handleSigninSubmit}>
+                <CardHeader>
+                  <CardTitle>Log In</CardTitle>
+                  <CardDescription>
+                    Access your account by entering your credentials.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-2">
+                  <div className="space-y-1">
+                    <Label htmlFor="email">Email</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="example@domain.com"
+                      value={signinForm.email}
+                      onChange={handleSigninChange}
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <Label htmlFor="password">Password</Label>
+                    <Input
+                      id="password"
+                      type="password"
+                      placeholder="••••••••"
+                      value={signinForm.password}
+                      onChange={handleSigninChange}
+                    />
+                  </div>
+                  <div className="pt-2 text-center text-sm">
+                    Dont have an account?{" "}
+                    <button
+                      className="underline"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setActiveTab("signup");
+                      }}
+                    >
+                      Sign up
+                    </button>
+                  </div>
+                </CardContent>
+                <CardFooter>
+                  <Button type="submit">Log In</Button>
+                </CardFooter>
+              </form>
             </Card>
           </TabsContent>
           <TabsContent value="signup">
             <Card>
-              <CardHeader>
-                <CardTitle>Sign Up</CardTitle>
-                <CardDescription>
-                  Create a new account by filling out the form below.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-2">
-                <div className="space-y-1">
-                  <Label htmlFor="username">Username</Label>
-                  <Input id="username" placeholder="john petrucci" />
-                </div>
-                <div className="space-y-1">
-                  <Label htmlFor="email">Email</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="john@dreamtheater.com"
-                  />
-                </div>
-                <div className="space-y-1">
-                  <Label htmlFor="password">Password</Label>
-                  <Input id="password" type="password" placeholder="••••••••" />
-                </div>
-              </CardContent>
-              <CardFooter>
-                <Button>Sign Up</Button>
-              </CardFooter>
+              <form onSubmit={handleSignupSubmit}>
+                <CardHeader>
+                  <CardTitle>Sign Up</CardTitle>
+                  <CardDescription>
+                    Create a new account by filling out the form below.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-2">
+                  <div className="space-y-1">
+                    <Label htmlFor="username">Username</Label>
+                    <Input
+                      id="username"
+                      placeholder="john petrucci"
+                      value={signupForm.username}
+                      onChange={handleSignupChange}
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <Label htmlFor="email">Email</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="john@dreamtheater.com"
+                      value={signupForm.email}
+                      onChange={handleSignupChange}
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <Label htmlFor="password">Password</Label>
+                    <Input
+                      id="password"
+                      type="password"
+                      placeholder="••••••••"
+                      value={signupForm.password}
+                      onChange={handleSignupChange}
+                    />
+                  </div>
+                  <div className="pt-2 text-center text-sm">
+                    Already have an account?{" "}
+                    <button
+                      className="underline"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setActiveTab("signin");
+                      }}
+                    >
+                      Log In
+                    </button>
+                  </div>
+                </CardContent>
+                <CardFooter>
+                  <Button type="submit">Sign Up</Button>
+                </CardFooter>
+              </form>
             </Card>
           </TabsContent>
         </Tabs>

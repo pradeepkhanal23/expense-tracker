@@ -1,6 +1,6 @@
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Dashboard } from "./views";
+import Dashboard from "./pages/Dashboard";
 import Auth from "./pages/Auth";
 import Hero from "./components/Hero";
 import MainLayout from "./components/MainLayout";
