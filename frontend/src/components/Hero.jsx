@@ -11,16 +11,16 @@ const Hero = () => {
                 <h1 className="text-4xl lg:text-5xl font-bold tracking-tighter ">
                   Take Control of Your Expenses
                 </h1>
-                <p className="text-justify text-muted-foreground md:text-xl">
+                <p className="text-justify text-muted-foreground md:text-lg">
                   Our expense tracker helps you stay on top of your finances and
                   make informed decisions about your spending.
                 </p>
               </div>
               <a
                 href="/auth"
-                className="w-full  md:mr-auto inline-flex h-10  items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+                className="w-full md:mr-auto inline-flex h-10 md:w-1/2  items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
               >
-                Get Started
+                Start Tracking
               </a>
             </div>
             <div className="flex-1">

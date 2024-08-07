@@ -2,7 +2,7 @@ import { MountainIcon } from "lucide-react";
 const Navbar = () => {
   return (
     <>
-      <header className="px-10  h-16 flex items-center border-b">
+      <header className="px-10 h-16 flex items-center border-b">
         <a href="/" className="flex items-center justify-center">
           <MountainIcon className="h-8 w-8" />
           <span className="ml-2 hidden md:block text-xl">Expense Tracker</span>

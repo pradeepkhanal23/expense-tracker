@@ -81,7 +81,7 @@ const Auth = () => {
                     <Input
                       id="password"
                       type="password"
-                      placeholder="••••••••"
+                      placeholder="**********"
                       value={signinForm.password}
                       onChange={handleSigninChange}
                     />
@@ -100,7 +100,9 @@ const Auth = () => {
                   </div>
                 </CardContent>
                 <CardFooter>
-                  <Button type="submit">Log In</Button>
+                  <Button type="submit" className="w-full">
+                    Log In
+                  </Button>
                 </CardFooter>
               </form>
             </Card>
@@ -139,7 +141,7 @@ const Auth = () => {
                     <Input
                       id="password"
                       type="password"
-                      placeholder="••••••••"
+                      placeholder="**********"
                       value={signupForm.password}
                       onChange={handleSignupChange}
                     />
@@ -158,7 +160,9 @@ const Auth = () => {
                   </div>
                 </CardContent>
                 <CardFooter>
-                  <Button type="submit">Sign Up</Button>
+                  <Button type="submit" className="w-full">
+                    Sign Up
+                  </Button>
                 </CardFooter>
               </form>
             </Card>
