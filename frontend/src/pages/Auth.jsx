@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
-import { LOGIN_USER } from "@/utils/mutations";
+import { LOGIN_USER, REGISTER_USER } from "@/utils/mutations";
 import AuthService from "@/utils/auth";
 
 const Auth = () => {
@@ -25,7 +25,8 @@ const Auth = () => {
   });
 
   // using the useMutation hook to extract the login method
-  const [login, { loading }] = useMutation(LOGIN_USER);
+  const [login] = useMutation(LOGIN_USER);
+  const [register] = useMutation(REGISTER_USER);
 
   const handleSigninChange = (e) => {
     const { id, value } = e.target;
@@ -59,10 +60,27 @@ const Auth = () => {
     }
   };
 
-  const handleSignupSubmit = (e) => {
+  const handleSignupSubmit = async (e) => {
     e.preventDefault();
-    // Handle signup form submission
-    console.log("Signup Form Data:", signupForm);
+
+    try {
+      const { data } = await register({
+        variables: {
+          ...signupForm,
+        },
+      });
+
+      const { token } = data.register;
+      AuthService.login(token);
+
+      setSigninForm({
+        email: "",
+        password: "",
+        username: "",
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -177,7 +195,7 @@ const Auth = () => {
                         setActiveTab("signin");
                       }}
                     >
-                      {loading ? "Loading..." : "  Log In"}
+                      Log In
                     </button>
                   </div>
                 </CardContent>
