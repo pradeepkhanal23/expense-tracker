@@ -1,14 +1,6 @@
 import { Mountain } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import MyTable from "../components/MyTable";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,14 +8,16 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { Progress } from "@/components/ui/progress";
-
 import { useQuery } from "@apollo/client";
 import { GET_ME } from "../utils/queries";
 import { useState, useEffect } from "react";
+import MyCard from "@/components/MyCard";
+import AuthService from "../utils/auth";
+import Form from "@/components/Form";
 
 const Dashboard = () => {
   const [user, setUser] = useState({});
+
   //fetching the user data
   const { loading, data } = useQuery(GET_ME);
 
@@ -47,6 +41,7 @@ const Dashboard = () => {
       {user && (
         <>
           <div className="flex min-h-screen w-full flex-col bg-muted/40">
+            {/* Sidebar */}
             <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex">
               <nav className="flex flex-col items-center gap-4 px-2 sm:py-4">
                 <a
@@ -58,7 +53,8 @@ const Dashboard = () => {
                 </a>
               </nav>
             </aside>
-            <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
+            <div className="flex flex-col  sm:gap-4 sm:py-4 sm:pl-14 ">
+              {/* Sticky Header */}
               <header className="sticky top-0 z-30 flex h-14 items-center justify-between gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6 sm:justify-end">
                 <h2 className="text-2xl font-semibold justify-end w-full">
                   Hello, {user.username}
@@ -80,44 +76,32 @@ const Dashboard = () => {
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
-                    <DropdownMenuItem>Logout</DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() => {
+                        AuthService.logout();
+                      }}
+                    >
+                      Logout
+                    </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </header>
-              <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:grid-cols-3 xl:grid-cols-3">
+
+              {/* Main Section */}
+              <main className=" p-4 sm:px-6 sm:py-0 md:gap-8  ">
                 <div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
-                  <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
-                    <Card x-chunk="dashboard-05-chunk-1">
-                      <CardHeader className="pb-2">
-                        <CardDescription>This Week</CardDescription>
-                        <CardTitle className="text-4xl">$1,329</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="text-xs text-muted-foreground">
-                          +25% from last week
-                        </div>
-                      </CardContent>
-                      <CardFooter>
-                        <Progress value={25} aria-label="25% increase" />
-                      </CardFooter>
-                    </Card>
-                    <Card x-chunk="dashboard-05-chunk-2">
-                      <CardHeader className="pb-2">
-                        <CardDescription>This Month</CardDescription>
-                        <CardTitle className="text-4xl">$5,329</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="text-xs text-muted-foreground">
-                          +10% from last month
-                        </div>
-                      </CardContent>
-                      <CardFooter>
-                        <Progress value={12} aria-label="12% increase" />
-                      </CardFooter>
-                    </Card>
+                  <div className="grid gap-4  grid-cols-1 md:grid-cols-2 lg:grid-cols-3  ">
+                    <MyCard title="Total Expenses" amount="2000" bg="red" />
+                    <MyCard title="Total Income" amount="5000" bg="green" />
+                    <MyCard title="Balance" amount="3000" bg="purple" />
+                  </div>
+                  <div className="grid gap-4  grid-cols-1   ">
+                    <MyTable expenses={user.expenses} {...user} />
+                  </div>
+                  <div className="w-full ">
+                    <Form />
                   </div>
                 </div>
-                <div></div>
               </main>
             </div>
           </div>
