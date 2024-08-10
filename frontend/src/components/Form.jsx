@@ -20,6 +20,8 @@ import {
 } from "@/components/ui/select";
 import { useState } from "react";
 import { dateFormat } from "@/utils/dateFormat";
+import { ADD_EXPENSE } from "@/utils/mutations";
+import { useMutation } from "@apollo/client";
 
 // Options for the category select
 const categoryOptions = [
@@ -31,10 +33,12 @@ const categoryOptions = [
 const Form = () => {
   const [formData, setFormData] = useState({
     description: "",
-    date: null,
+    date: "",
     amount: "",
-    category: null,
+    category: "",
   });
+
+  const [addExpense] = useMutation(ADD_EXPENSE);
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -58,8 +62,23 @@ const Form = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    try {
+      const { data } = await addExpense({
+        variables: {
+          description: formData.description,
+          amount: parseFloat(formData.amount), //since the typedef is expecting Float data type, we parse it as Float
+          date: dateFormat(formData.date), //we called our utility method that converts the date from the date picker to a string in the required format
+          category: formData.category,
+        },
+      });
+
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
