@@ -1,4 +1,4 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Pencil, Trash } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -14,24 +14,39 @@ import {
   CardDescription,
   CardContent,
 } from "@/components/ui/card";
-import { ListFilter } from "lucide-react";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+
 import { Badge } from "@/components/ui/badge";
 import { Button } from "./ui/button";
-import { useQuery } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import { GET_EXPENSES } from "@/utils/queries";
 import { useEffect, useState } from "react";
+import { DELETE_EXPENSE } from "@/utils/mutations";
 
 const MyTable = () => {
   const [expenses, setExpenses] = useState([]);
   const { data, error, loading } = useQuery(GET_EXPENSES);
+  const [deleteExpense] = useMutation(DELETE_EXPENSE, {
+    refetchQueries: [
+      {
+        query: GET_EXPENSES,
+      },
+    ],
+  });
+
+  const handleEdit = (id) => {
+    console.log(id);
+  };
+  const handleDelete = async (idToDelete) => {
+    try {
+      await deleteExpense({
+        variables: {
+          _id: idToDelete,
+        },
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
     setExpenses(data?.expenses);
@@ -48,7 +63,7 @@ const MyTable = () => {
   if (error) {
     return (
       <>
-        <h1>Error displaying data..</h1>
+        <h1>Error displaying</h1>
       </>
     );
   }
@@ -56,30 +71,6 @@ const MyTable = () => {
   return (
     <>
       {/* Table */}
-
-      {/* filter button  */}
-      {/* <div className="flex items-center justify-between">
-        <div className="ml-auto">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="sm" className="h-7 gap-1 ">
-                <ListFilter className="h-4 w-4" />
-                <span className=" sm:whitespace-nowrap">Filter</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Filter by</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuCheckboxItem checked>
-                Username
-              </DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem>Amount</DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem>Category</DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem>Date</DropdownMenuCheckboxItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-      </div> */}
 
       <Card x-chunk="dashboard-05-chunk-3">
         <CardHeader className="px-7">
@@ -96,6 +87,7 @@ const MyTable = () => {
                 <TableHead className="hidden sm:table-cell">Category</TableHead>
                 <TableHead className="hidden md:table-cell">Date</TableHead>
                 <TableHead className="text-right">Amount</TableHead>
+                <TableHead className="text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
 
@@ -107,10 +99,10 @@ const MyTable = () => {
                       className="hover:bg-accent cursor-pointer"
                       key={i}
                     >
-                      <TableCell className="table-cell">
+                      <TableCell className="table-cell capitalize">
                         {expense.description}
                       </TableCell>
-                      <TableCell className="hidden sm:table-cell">
+                      <TableCell className="hidden sm:table-cell capitalize">
                         <Badge className="text-sm" variant="secondary">
                           {expense.category}
                         </Badge>
@@ -119,7 +111,23 @@ const MyTable = () => {
                         {expense.date}
                       </TableCell>
                       <TableCell className="text-right">
-                        ${expense.amount}
+                        $ {expense.amount}
+                      </TableCell>
+                      <TableCell className="text-right flex items-center justify-end gap-x-3">
+                        <Button
+                          size="icon"
+                          className="bg-slate-700"
+                          onClick={() => handleEdit(expense._id)}
+                        >
+                          <Pencil className="h-4 w-4" />
+                        </Button>
+                        <Button
+                          size="icon"
+                          variant="destructive"
+                          onClick={() => handleDelete(expense._id)}
+                        >
+                          <Trash className="h-4 w-4" />
+                        </Button>
                       </TableCell>
                     </TableRow>
                   );

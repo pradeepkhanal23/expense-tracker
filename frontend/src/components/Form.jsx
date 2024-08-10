@@ -129,7 +129,7 @@ const Form = () => {
               value={formData.category}
             >
               <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Select Category" />
+                <SelectValue placeholder="Expense" />
               </SelectTrigger>
               <SelectContent>
                 {categoryOptions.map((category, i) => {
