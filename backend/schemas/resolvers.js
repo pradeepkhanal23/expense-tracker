@@ -11,6 +11,12 @@ const resolvers = {
       }
       throw AuthenticationError;
     },
+    expenses: async (parent, args, context) => {
+      if (context.user) {
+        return Expense.find({});
+      }
+      throw AuthenticationError;
+    },
   },
 
   Mutation: {

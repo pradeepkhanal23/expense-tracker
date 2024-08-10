@@ -17,3 +17,15 @@ export const GET_ME = gql`
     }
   }
 `;
+
+export const GET_EXPENSES = gql`
+  query getExpenses {
+    expenses {
+      _id
+      description
+      amount
+      date
+      category
+    }
+  }
+`;

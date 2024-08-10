@@ -25,8 +25,18 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "./ui/button";
+import { useQuery } from "@apollo/client";
+import { GET_EXPENSES } from "@/utils/queries";
+import { useEffect, useState } from "react";
 
-const MyTable = ({ expenses, username, email }) => {
+const MyTable = () => {
+  const [expenses, setExpenses] = useState([]);
+  const { data } = useQuery(GET_EXPENSES);
+
+  useEffect(() => {
+    setExpenses(data?.expenses);
+  }, [data]);
+
   return (
     <>
       {/* Table */}
@@ -66,9 +76,7 @@ const MyTable = ({ expenses, username, email }) => {
           <Table className="text-md">
             <TableHeader>
               <TableRow>
-                <TableHead className="hidden sm:table-cell">
-                  Description
-                </TableHead>
+                <TableHead className="table-cell">Description</TableHead>
                 <TableHead className="hidden sm:table-cell">Category</TableHead>
                 <TableHead className="hidden md:table-cell">Date</TableHead>
                 <TableHead className="text-right">Amount</TableHead>
@@ -83,7 +91,7 @@ const MyTable = ({ expenses, username, email }) => {
                       className="hover:bg-accent cursor-pointer"
                       key={i}
                     >
-                      <TableCell className="hidden sm:table-cell">
+                      <TableCell className="table-cell">
                         {expense.description}
                       </TableCell>
                       <TableCell className="hidden sm:table-cell">

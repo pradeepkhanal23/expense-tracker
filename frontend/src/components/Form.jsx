@@ -22,6 +22,7 @@ import { useState } from "react";
 import { dateFormat } from "@/utils/dateFormat";
 import { ADD_EXPENSE } from "@/utils/mutations";
 import { useMutation } from "@apollo/client";
+import { GET_EXPENSES } from "@/utils/queries";
 
 // Options for the category select
 const categoryOptions = [
@@ -38,7 +39,13 @@ const Form = () => {
     category: "",
   });
 
-  const [addExpense] = useMutation(ADD_EXPENSE);
+  const [addExpense] = useMutation(ADD_EXPENSE, {
+    refetchQueries: [
+      {
+        query: GET_EXPENSES,
+      },
+    ],
+  });
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -66,7 +73,7 @@ const Form = () => {
     e.preventDefault();
 
     try {
-      const { data } = await addExpense({
+      await addExpense({
         variables: {
           description: formData.description,
           amount: parseFloat(formData.amount), //since the typedef is expecting Float data type, we parse it as Float
@@ -74,8 +81,6 @@ const Form = () => {
           category: formData.category,
         },
       });
-
-      console.log(data);
     } catch (error) {
       console.error(error);
     }

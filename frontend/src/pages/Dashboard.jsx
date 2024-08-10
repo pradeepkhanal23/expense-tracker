@@ -55,7 +55,7 @@ const Dashboard = () => {
             </aside>
             <div className="flex flex-col  sm:gap-4 sm:py-4 sm:pl-14 ">
               {/* Sticky Header */}
-              <header className="sticky top-0 z-30 flex h-14 items-center justify-between gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6 sm:justify-end">
+              <header className="sticky top-0 z-30 flex h-20 items-center justify-between gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6 sm:justify-end">
                 <h2 className="text-2xl font-semibold justify-end w-full">
                   Hello, {user.username}
                   <p className="text-muted-foreground text-sm">{user.email}</p>
@@ -97,7 +97,7 @@ const Dashboard = () => {
                     <MyCard title="Balance" amount="3000" bg="purple" />
                   </div>
                   <div className="grid gap-4  grid-cols-1   ">
-                    <MyTable expenses={user.expenses} {...user} />
+                    <MyTable />
                   </div>
                   <div className="w-full ">
                     <Form />
