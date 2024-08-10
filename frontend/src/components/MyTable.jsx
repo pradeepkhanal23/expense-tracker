@@ -31,11 +31,27 @@ import { useEffect, useState } from "react";
 
 const MyTable = () => {
   const [expenses, setExpenses] = useState([]);
-  const { data } = useQuery(GET_EXPENSES);
+  const { data, error, loading } = useQuery(GET_EXPENSES);
 
   useEffect(() => {
     setExpenses(data?.expenses);
   }, [data]);
+
+  if (loading) {
+    return (
+      <>
+        <h1>Loading data....</h1>
+      </>
+    );
+  }
+
+  if (error) {
+    return (
+      <>
+        <h1>Error displaying data..</h1>
+      </>
+    );
+  }
 
   return (
     <>
