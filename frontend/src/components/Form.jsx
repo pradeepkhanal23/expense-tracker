@@ -19,6 +19,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useState } from "react";
+import { dateFormat } from "@/utils/dateFormat";
 
 // Options for the category select
 const categoryOptions = [
@@ -59,8 +60,6 @@ const Form = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    console.log(formData);
   };
 
   return (
@@ -106,7 +105,7 @@ const Form = () => {
               value={formData.category}
             >
               <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Expense" />
+                <SelectValue placeholder="Select Category" />
               </SelectTrigger>
               <SelectContent>
                 {categoryOptions.map((category, i) => {

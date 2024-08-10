@@ -58,6 +58,7 @@ const Dashboard = () => {
               <header className="sticky top-0 z-30 flex h-14 items-center justify-between gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6 sm:justify-end">
                 <h2 className="text-2xl font-semibold justify-end w-full">
                   Hello, {user.username}
+                  <p className="text-muted-foreground text-sm">{user.email}</p>
                 </h2>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
