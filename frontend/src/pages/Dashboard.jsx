@@ -99,9 +99,6 @@ const Dashboard = () => {
                   <div className="grid gap-4  grid-cols-1   ">
                     <MyTable />
                   </div>
-                  <div className="w-full ">
-                    <Form />
-                  </div>
                 </div>
               </main>
             </div>

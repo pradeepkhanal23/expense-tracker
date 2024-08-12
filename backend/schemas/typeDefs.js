@@ -29,7 +29,7 @@ const typeDefs = `
    type Mutation{
     register(username: String! , email: String! , password: String!): Auth
     login(email:String! , password: String!): Auth
-    addExpense(description: String!, amount: Float! , date: String!, category: String!): Expense
+    addExpense(description: String!, amount: Float!, date: String!, category: String!): Expense
     updateExpense(_id: ID!, description: String, amount:Float, date:String! , category: String!): Expense
     deleteExpense(_id: ID!):Expense
    }

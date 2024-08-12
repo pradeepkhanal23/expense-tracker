@@ -1,4 +1,4 @@
-import { Pencil, Trash } from "lucide-react";
+import { Pencil, Trash, PlusCircle } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -14,17 +14,42 @@ import {
   CardDescription,
   CardContent,
 } from "@/components/ui/card";
-
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "./ui/button";
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_EXPENSES } from "@/utils/queries";
 import { useEffect, useState } from "react";
-import { DELETE_EXPENSE } from "@/utils/mutations";
+import { DELETE_EXPENSE, UPDATE_EXPENSE } from "@/utils/mutations";
+import Form from "./Form";
+import { dateFormat } from "@/utils/dateFormat";
 
 const MyTable = () => {
-  const [expenses, setExpenses] = useState([]);
+  const [expenses, setExpenses] = useState(null);
+  const [open, setOpen] = useState(false);
   const { data, error, loading } = useQuery(GET_EXPENSES);
+  const [activeExpense, setActiveExpense] = useState([]);
+
+  // a flag to keep track of the edit mode so that we can conditionally render the title and other labels in the form
+  const [editMode, setEditMode] = useState(false);
+
+  const openModal = () => {
+    setOpen(true);
+  };
+  const closeModal = () => {
+    setOpen(false);
+    setEditMode(false);
+    // resetting the selected expense when modal is closed
+    setActiveExpense(null);
+  };
+
+  // make sure that refetchQueries is an array, not an object
   const [deleteExpense] = useMutation(DELETE_EXPENSE, {
     refetchQueries: [
       {
@@ -33,9 +58,23 @@ const MyTable = () => {
     ],
   });
 
-  const handleEdit = (id) => {
-    console.log(id);
+  // make sure that refetchQueries is an array, not an object
+  const [updateExpense] = useMutation(UPDATE_EXPENSE, {
+    refetchQueries: [
+      {
+        query: GET_EXPENSES,
+      },
+    ],
+  });
+
+  // edit handler
+  const handleEdit = (expense) => {
+    setActiveExpense(expense);
+    setEditMode(true);
+    openModal();
   };
+
+  // delete handler
   const handleDelete = async (idToDelete) => {
     try {
       await deleteExpense({
@@ -45,6 +84,25 @@ const MyTable = () => {
       });
     } catch (error) {
       console.error(error);
+    }
+  };
+
+  // update Handler
+  const handleUpdate = async (updatedExpense) => {
+    try {
+      await updateExpense({
+        variables: {
+          _id: updatedExpense._id,
+          description: updatedExpense.description,
+          amount: parseFloat(updatedExpense.amount),
+          date: dateFormat(updatedExpense.date),
+          category: updatedExpense.category,
+        },
+      });
+    } catch (error) {
+      console.error(error);
+    } finally {
+      closeModal();
     }
   };
 
@@ -70,8 +128,42 @@ const MyTable = () => {
 
   return (
     <>
-      {/* Table */}
+      {/* Dialog */}
 
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle className="font-bold text-2xl">
+              {editMode ? "Update Expense" : " Add Expense"}
+            </DialogTitle>
+            <DialogDescription>
+              {editMode ? "Update your expense" : " Add your expense"}
+              here. Click save when you're done.
+            </DialogDescription>
+          </DialogHeader>
+          <Form
+            closeModal={closeModal}
+            editMode={editMode}
+            handleUpdate={handleUpdate}
+            activeExpense={activeExpense}
+          />
+        </DialogContent>
+      </Dialog>
+
+      {/* Table */}
+      <div className="ml-auto ">
+        <Button
+          size="sm"
+          type="submit"
+          className="flex items-center gap-x-2 text-sm md:text-base"
+          onClick={() => {
+            setOpen(!open);
+          }}
+        >
+          <PlusCircle className="h-3.5 w-3.5" />
+          <span className=" sm:whitespace-nowrap ">Add Expense</span>
+        </Button>
+      </div>
       <Card x-chunk="dashboard-05-chunk-3">
         <CardHeader className="px-7">
           <CardTitle>Expenses</CardTitle>
@@ -117,7 +209,7 @@ const MyTable = () => {
                         <Button
                           size="icon"
                           className="bg-slate-700"
-                          onClick={() => handleEdit(expense._id)}
+                          onClick={() => handleEdit(expense)}
                         >
                           <Pencil className="h-4 w-4" />
                         </Button>

@@ -51,8 +51,8 @@ export const ADD_EXPENSE = gql`
 export const UPDATE_EXPENSE = gql`
   mutation updateExpense(
     $_id: ID!
-    $description: String
-    $amount: Float
+    $description: String!
+    $amount: Float!
     $date: String!
     $category: String!
   ) {

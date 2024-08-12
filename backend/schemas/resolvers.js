@@ -1,3 +1,4 @@
+const { default: mongoose } = require("mongoose");
 const { User, Expense } = require("../models");
 const { signToken, AuthenticationError } = require("../utils/auth");
 const { GraphQLError } = require("graphql");
@@ -13,7 +14,24 @@ const resolvers = {
     },
     expenses: async (parent, args, context) => {
       if (context.user) {
-        return Expense.find({});
+        const user = await User.findById({
+          _id: context.user._id,
+        }).populate("expenses");
+
+        const expensesArray = user.expenses.map((exp) => exp._id);
+
+        console.log("Expense Array", expensesArray);
+        // const objectIdArr = expensesArray.map((id) =>
+        //   mongoose.Types.ObjectId(id)
+        // );
+
+        // console.log("Object Array", objectIdArr);
+
+        return await Expense.find({
+          _id: {
+            $in: expensesArray,
+          },
+        });
       }
       throw AuthenticationError;
     },

@@ -114,6 +114,7 @@ const Auth = () => {
                       placeholder="example@domain.com"
                       value={signinForm.email}
                       onChange={handleSigninChange}
+                      required
                     />
                   </div>
                   <div className="space-y-1">
@@ -124,6 +125,7 @@ const Auth = () => {
                       placeholder="**********"
                       value={signinForm.password}
                       onChange={handleSigninChange}
+                      required
                     />
                   </div>
                   <div className="pt-2 text-center text-sm">
@@ -164,6 +166,7 @@ const Auth = () => {
                       placeholder="john petrucci"
                       value={signupForm.username}
                       onChange={handleSignupChange}
+                      required
                     />
                   </div>
                   <div className="space-y-1">
@@ -174,6 +177,7 @@ const Auth = () => {
                       placeholder="john@dreamtheater.com"
                       value={signupForm.email}
                       onChange={handleSignupChange}
+                      required
                     />
                   </div>
                   <div className="space-y-1">
@@ -184,6 +188,7 @@ const Auth = () => {
                       placeholder="**********"
                       value={signupForm.password}
                       onChange={handleSignupChange}
+                      required
                     />
                   </div>
                   <div className="pt-2 text-center text-sm">
