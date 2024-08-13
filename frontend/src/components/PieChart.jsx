@@ -7,11 +7,11 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-// const chartData = [
-//   { category: "Expense", amount: 1200, fill: "hsl(var(--chart-1))" },
-//   { category: "Income", amount: 300, fill: "hsl(var(--chart-2))" },
-//   { category: "Investment", amount: 150, fill: "hsl(var(--chart-3))" },
-// ];
+const chartData = [
+  { category: "Expense", amount: 1200, fill: "hsl(var(--chart-1))" },
+  { category: "Income", amount: 300, fill: "hsl(var(--chart-2))" },
+  { category: "Investment", amount: 150, fill: "hsl(var(--chart-3))" },
+];
 
 const chartConfig = {
   Expense: {
@@ -28,9 +28,9 @@ const chartConfig = {
   },
 };
 
-export default function Chart({ pieChartData }) {
+export default function Chart() {
   const totalExpenses = React.useMemo(() => {
-    return pieChartData.reduce((acc, curr) => acc + curr.amount, 0);
+    return chartData.reduce((acc, curr) => acc + curr.amount, 0);
   }, []);
 
   // Function to get color based on category
@@ -54,7 +54,7 @@ export default function Chart({ pieChartData }) {
               content={<ChartTooltipContent hideLabel />}
             />
             <Pie
-              data={pieChartData}
+              data={chartData}
               dataKey="amount"
               nameKey="category"
               innerRadius={60}

@@ -28,7 +28,10 @@ const Dashboard = () => {
   // };
 
   //fetching the user data
-  const { loading, data } = useQuery(GET_ME);
+  const { loading, data } = useQuery(GET_ME, {
+    // this will make sure that
+    pollInterval: 100,
+  });
 
   // calculating all the totals for the display cards
   const calculateTotals = (expenses) => {
@@ -93,7 +96,7 @@ const Dashboard = () => {
               <main className=" p-4 sm:px-6 sm:py-0 md:gap-8  ">
                 <div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
                   <div className="grid gap-4  grid-cols-1 md:grid-cols-2 lg:grid-cols-3  ">
-                    {/* <Chart pieChartData={pieChartData} />
+                    {/* <Chart />
                     <BarChart />
                     <LineChart /> */}
 
