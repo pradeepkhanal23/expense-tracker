@@ -20,13 +20,6 @@ const resolvers = {
 
         const expensesArray = user.expenses.map((exp) => exp._id);
 
-        console.log("Expense Array", expensesArray);
-        // const objectIdArr = expensesArray.map((id) =>
-        //   mongoose.Types.ObjectId(id)
-        // );
-
-        // console.log("Object Array", objectIdArr);
-
         return await Expense.find({
           _id: {
             $in: expensesArray,
