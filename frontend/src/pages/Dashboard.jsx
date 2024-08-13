@@ -99,14 +99,14 @@ const Dashboard = () => {
                     <MyCard
                       title="Total Expenses"
                       amount={totalExpenses}
-                      bg="red"
+                      color="red"
                     />
                     <MyCard
                       title="Total Income"
                       amount={totalIncome}
-                      bg="green"
+                      color="green"
                     />
-                    <MyCard title="Balance" amount={balance} bg="purple" />
+                    <MyCard title="Balance" amount={balance} color="grey" />
                   </div>
                   <div className="grid gap-4  grid-cols-1   ">
                     <MyTable />
