@@ -21,6 +21,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+
 import { Badge } from "@/components/ui/badge";
 import { Button } from "./ui/button";
 import { useQuery, useMutation } from "@apollo/client";
@@ -29,12 +30,14 @@ import { useEffect, useState } from "react";
 import { DELETE_EXPENSE, UPDATE_EXPENSE } from "@/utils/mutations";
 import Form from "./Form";
 import { dateFormat } from "@/utils/dateFormat";
+import Alert from "@/components/Alert";
 
 const MyTable = () => {
   const [expenses, setExpenses] = useState(null);
   const [open, setOpen] = useState(false);
   const { data, error, loading } = useQuery(GET_EXPENSES);
   const [activeExpense, setActiveExpense] = useState([]);
+  const [alertDialogOpen, setAlertDialogOpen] = useState(false);
 
   // a flag to keep track of the edit mode so that we can conditionally render the title and other labels in the form
   const [editMode, setEditMode] = useState(false);
@@ -75,15 +78,23 @@ const MyTable = () => {
   };
 
   // delete handler
-  const handleDelete = async (idToDelete) => {
-    try {
-      await deleteExpense({
-        variables: {
-          _id: idToDelete,
-        },
-      });
-    } catch (error) {
-      console.error(error);
+  const handleDelete = async (expense) => {
+    setActiveExpense(expense);
+    setAlertDialogOpen(true);
+  };
+
+  // handling the delete only after confirm
+  const handleConfirmDelete = async () => {
+    if (activeExpense) {
+      try {
+        await deleteExpense({
+          variables: { _id: activeExpense._id },
+        });
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setAlertDialogOpen(false); // Close the alert dialog
+      }
     }
   };
 
@@ -128,8 +139,13 @@ const MyTable = () => {
 
   return (
     <>
+      {/* Alert Dialog */}
+      <Alert
+        onConfirm={handleConfirmDelete}
+        onClose={() => setAlertDialogOpen(false)}
+        open={alertDialogOpen}
+      />
       {/* Dialog */}
-
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
@@ -223,7 +239,7 @@ const MyTable = () => {
                             <Button
                               size="sm"
                               variant="destructive"
-                              onClick={() => handleDelete(expense._id)}
+                              onClick={() => handleDelete(expense)}
                             >
                               <Trash className="h-4 w-4" />
                             </Button>
