@@ -1,4 +1,6 @@
 import heroImg from "../assets/images/finance.jpg";
+import { Link } from "react-router-dom";
+import AuthService from "../utils/auth";
 
 const Hero = () => {
   return (
@@ -16,12 +18,12 @@ const Hero = () => {
                   make informed decisions about your spending.
                 </p>
               </div>
-              <a
-                href="/auth"
-                className="w-full md:mr-auto inline-flex h-10 md:w-1/2  items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+              <Link
+                to={`${AuthService.loggedIn() ? "/dashboard" : "/auth"}`}
+                className="w-full md:mr-auto inline-flex h-10 md:w-1/2  items-center justify-center rounded-md bg-primary px-8  font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
               >
                 Start Tracking
-              </a>
+              </Link>
             </div>
             <div className="flex-1">
               <img

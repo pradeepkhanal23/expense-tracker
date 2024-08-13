@@ -151,7 +151,7 @@ const MyTable = () => {
       </Dialog>
 
       {/* Table */}
-      <div className="ml-auto ">
+      <div className="ml-auto flex items-center gap-x-2">
         <Button
           size="sm"
           type="submit"
@@ -164,70 +164,85 @@ const MyTable = () => {
           <span className=" sm:whitespace-nowrap ">Add Expense</span>
         </Button>
       </div>
-      <Card x-chunk="dashboard-05-chunk-3">
-        <CardHeader className="px-7">
-          <CardTitle>Expenses</CardTitle>
-          <CardDescription className="text-md">
-            Your Recent expenses.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Table className="text-md">
-            <TableHeader>
-              <TableRow>
-                <TableHead className="table-cell">Description</TableHead>
-                <TableHead className="hidden sm:table-cell">Category</TableHead>
-                <TableHead className="hidden md:table-cell">Date</TableHead>
-                <TableHead className="text-right">Amount</TableHead>
-                <TableHead className="text-right">Actions</TableHead>
-              </TableRow>
-            </TableHeader>
+      {expenses && expenses.length > 0 ? (
+        <>
+          {" "}
+          <Card x-chunk="dashboard-05-chunk-3">
+            <CardHeader className="px-7">
+              <CardTitle>Expenses</CardTitle>
+              <CardDescription className="text-md">
+                Your Recent expenses.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Table className="text-md">
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="table-cell">Description</TableHead>
+                    <TableHead className="hidden sm:table-cell">
+                      Category
+                    </TableHead>
+                    <TableHead className="hidden md:table-cell">Date</TableHead>
+                    <TableHead className="text-right">Amount</TableHead>
+                    <TableHead className="text-right table-cell">
+                      Actions
+                    </TableHead>
+                  </TableRow>
+                </TableHeader>
 
-            <TableBody>
-              {expenses &&
-                expenses.map((expense, i) => {
-                  return (
-                    <TableRow
-                      className="hover:bg-accent cursor-pointer"
-                      key={i}
-                    >
-                      <TableCell className="table-cell capitalize">
-                        {expense.description}
-                      </TableCell>
-                      <TableCell className="hidden sm:table-cell capitalize">
-                        <Badge className="text-sm" variant="secondary">
-                          {expense.category}
-                        </Badge>
-                      </TableCell>
-                      <TableCell className="hidden md:table-cell">
-                        {expense.date}
-                      </TableCell>
-                      <TableCell className="text-right">
-                        $ {expense.amount}
-                      </TableCell>
-                      <TableCell className="text-right flex items-center justify-end gap-x-3">
-                        <Button
-                          size="icon"
-                          className="bg-slate-700"
-                          onClick={() => handleEdit(expense)}
+                <TableBody>
+                  {expenses &&
+                    expenses.map((expense, i) => {
+                      return (
+                        <TableRow
+                          className="hover:bg-accent cursor-pointer"
+                          key={i}
                         >
-                          <Pencil className="h-4 w-4" />
-                        </Button>
-                        <Button
-                          size="icon"
-                          variant="destructive"
-                          onClick={() => handleDelete(expense._id)}
-                        >
-                          <Trash className="h-4 w-4" />
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
+                          <TableCell className="table-cell capitalize">
+                            {expense.description}
+                          </TableCell>
+                          <TableCell className="hidden sm:table-cell capitalize">
+                            <Badge className="text-sm" variant="secondary">
+                              {expense.category}
+                            </Badge>
+                          </TableCell>
+                          <TableCell className="hidden md:table-cell">
+                            {expense.date}
+                          </TableCell>
+                          <TableCell className="text-right">
+                            $ {expense.amount}
+                          </TableCell>
+                          <TableCell className="text-right flex items-center justify-end gap-x-1 ">
+                            <Button
+                              size="sm"
+                              className="bg-slate-700 "
+                              onClick={() => handleEdit(expense)}
+                            >
+                              <Pencil className="h-4 w-4" />
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="destructive"
+                              onClick={() => handleDelete(expense._id)}
+                            >
+                              <Trash className="h-4 w-4" />
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
+        </>
+      ) : (
+        <>
+          <p className="text-center text-xl text-muted-foreground">
+            There is no data to display. Please add some expenses.
+          </p>
+        </>
+      )}
     </>
   );
 };
