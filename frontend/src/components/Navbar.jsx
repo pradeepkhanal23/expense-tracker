@@ -3,7 +3,6 @@ import AuthService from "../utils/auth.js";
 import { Button } from "./ui/button.jsx";
 import { Link } from "react-router-dom";
 const Navbar = () => {
-  console.log(AuthService.loggedIn());
   return (
     <>
       <header className="px-10 h-16 flex items-center border-b">

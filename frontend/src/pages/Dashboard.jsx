@@ -96,17 +96,18 @@ const Dashboard = () => {
                     {/* <Chart pieChartData={pieChartData} />
                     <BarChart />
                     <LineChart /> */}
-                    <MyCard
-                      title="Total Expenses"
-                      amount={totalExpenses}
-                      color="red"
-                    />
+
                     <MyCard
                       title="Total Income"
                       amount={totalIncome}
                       color="green"
                     />
-                    <MyCard title="Balance" amount={balance} color="grey" />
+                    <MyCard
+                      title="Total Expenses"
+                      amount={totalExpenses}
+                      color="red"
+                    />
+                    <MyCard title="Balance" amount={balance} color="#333" />
                   </div>
                   <div className="grid gap-4  grid-cols-1   ">
                     <MyTable />

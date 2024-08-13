@@ -16,7 +16,12 @@ const MyCard = ({ title, amount, color }) => {
         />
       </CardHeader>
       <CardContent>
-        <div className="text-3xl font-bold">${amount}</div>
+        <div
+          className="text-3xl md:text-5xl font-bold tracking-wide"
+          style={colorStyle}
+        >
+          ${amount}
+        </div>
       </CardContent>
     </Card>
   );
