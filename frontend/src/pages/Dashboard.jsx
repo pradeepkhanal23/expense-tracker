@@ -5,78 +5,100 @@ import { GET_ME } from "../utils/queries";
 import { useState, useEffect } from "react";
 import MyCard from "@/components/MyCard";
 import Header from "@/components/Header";
-// import Chart from "@/components/PieChart";
-// import BarChart from "@/components/BarChart";
-// import LineChart from "@/components/LineChart";
+import PieChart from "@/components/PieChart";
+import BarChart from "@/components/BarChart";
+import LineChart from "@/components/LineChart";
+import Skeleton from "@/components/Skeleton";
 
 const Dashboard = () => {
   const [user, setUser] = useState({});
-  // const [pieChartData, setPieChartData] = useState([]);
+  const [chartData, setChartData] = useState([]);
+  const [lineChartData, setLineChartData] = useState([]);
 
-  // const transformDataForPieChart = () => {
-  //   // if the user is there and user related expenses, then we format the data to pass into the pie chart
-
-  //   const formattedData = data.me.expenses.map((expense, i) => {
-  //     const { category, amount } = expense;
-  //     return {
-  //       category,
-  //       amount,
-  //     };
-  //   });
-
-  //   return formattedData;
-  // };
+  const [cardValues, setCardValues] = useState({
+    totalIncome: 0,
+    totalExpenses: 0,
+    balance: 0,
+  });
 
   //fetching the user data
   const { loading, data } = useQuery(GET_ME, {
-    // this will make sure that
+    // this will make sure that the data is refresed after every 100 miliseconds
     pollInterval: 100,
   });
 
   // calculating all the totals for the display cards
   const calculateTotals = (expenses) => {
-    // Calculate total expenses by filtering only expense items
-    const totalExpenses = expenses
-      .filter(
-        (exp) => exp.category === "expense" || exp.category === "investment"
-      )
-      .reduce((acc, curr) => acc + curr.amount, 0);
+    let totalIncome = 0;
+    let totalExpense = 0;
+    let totalInvestment = 0;
 
-    // calculating total income
-    const totalIncome = expenses
-      .filter((exp) => exp.category === "income")
-      .reduce((acc, curr) => acc + curr.amount, 0);
+    // we wanna create a single value for either income, investment or expense because 3 only want 3 segment in our pie chart
+    expenses.forEach((expense) => {
+      if (expense.category === "income") {
+        totalIncome += expense.amount;
+      } else if (expense.category === "expense") {
+        totalExpense += expense.amount;
+      } else if (expense.category === "investment") {
+        totalInvestment += expense.amount;
+      }
+    });
 
-    // calculating balance
+    const totalExpenses = totalExpense + totalInvestment;
     const balance = totalIncome - totalExpenses;
 
+    // Return totals and formatted data for the PieChart
     return {
-      totalExpenses,
       totalIncome,
+      totalExpenses,
       balance,
+      pieData: [
+        {
+          category: "Income",
+          amount: totalIncome,
+          fill: "hsl(var(--chart-2))",
+        },
+        {
+          category: "Expense",
+          amount: totalExpense,
+          fill: "hsl(var(--chart-1))",
+        },
+        {
+          category: "Investment",
+          amount: totalInvestment,
+          fill: "hsl(var(--chart-4))",
+        },
+      ],
     };
   };
-
-  // Calculate card values
-  const { totalExpenses, totalIncome, balance } = user.expenses
-    ? calculateTotals(user.expenses)
-    : { totalExpenses: 0, totalIncome: 0, balance: 0 };
 
   // fetch the user details on component render
   useEffect(() => {
     if (data && data.me) {
+      // on initial load, we put the user's details in the user array
       setUser(data.me);
 
-      // const pieData = transformDataForPieChart();
+      // now destructuring the values from calculate totals where we have all our value and pie chart data
+      const { totalIncome, totalExpenses, balance, pieData } = calculateTotals(
+        data.me.expenses
+      );
 
-      // setPieChartData(pieData);
+      //  now setting the pie chart data to the state variable setChartData
+      setChartData(pieData);
+
+      // to render the proper card values , we also set the card value updater
+      setCardValues({
+        totalIncome,
+        totalExpenses,
+        balance,
+      });
     }
   }, [data]);
 
   if (loading) {
     return (
       <>
-        <h1>Loading..</h1>
+        <Skeleton />
       </>
     );
   }
@@ -93,26 +115,37 @@ const Dashboard = () => {
               <Header user={user} />
 
               {/* Main Section */}
-              <main className=" p-4 sm:px-6 sm:py-0 md:gap-8  ">
+              <main className=" p-4 sm:px-6 sm:py-0 md:gap-8 container ">
                 <div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
                   <div className="grid gap-4  grid-cols-1 md:grid-cols-2 lg:grid-cols-3  ">
-                    {/* <Chart />
-                    <BarChart />
-                    <LineChart /> */}
-
                     <MyCard
                       title="Total Income"
-                      amount={totalIncome}
-                      color="#27a567"
+                      amount={cardValues.totalIncome}
+                      color="hsl(var(--chart-2))"
                     />
                     <MyCard
                       title="Total Expenses"
-                      amount={totalExpenses}
-                      color="#ff7074"
+                      amount={cardValues.totalExpenses}
+                      color="hsl(var(--chart-1))"
                     />
-                    <MyCard title="Balance" amount={balance} color="#4169e1" />
+                    <MyCard
+                      title="Overall Balance"
+                      amount={cardValues.balance}
+                      color="#4169e1"
+                    />
                   </div>
-                  <div className="grid gap-4  grid-cols-1   ">
+
+                  <div className="grid gap-4  grid-cols-1 md:grid-cols-2 ">
+                    {/* Charts Section */}
+                    {user.expenses && user.expenses.length > 0 && (
+                      <>
+                        <PieChart data={chartData} />
+                        <BarChart data={chartData} />
+                      </>
+                    )}
+                  </div>
+
+                  <div className="grid gap-4  grid-cols-1">
                     <MyTable />
                   </div>
                 </div>

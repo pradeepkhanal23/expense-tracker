@@ -10,7 +10,7 @@ const MyCard = ({ title, amount, color }) => {
     <Card x-chunk="dashboard-01-chunk-0">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle
-          className="text-xl font-bold tracking-normal"
+          className="font-bold tracking-normal text-lg"
           style={colorStyle}
         >
           {title}
@@ -22,7 +22,7 @@ const MyCard = ({ title, amount, color }) => {
       </CardHeader>
       <CardContent>
         <div
-          className="text-2xl md:text-5xl font-extrabold tracking-wide"
+          className="text-4xl font-extrabold tracking-wide"
           style={colorStyle}
         >
           ${amount}

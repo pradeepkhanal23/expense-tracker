@@ -210,17 +210,17 @@ const MyTable = () => {
                       let categoryStyle;
                       if (expense.category === "expense") {
                         categoryStyle = {
-                          backgroundColor: "#ff7074",
+                          backgroundColor: "hsl(var(--chart-1))",
                           color: "white",
                         };
                       } else if (expense.category === "investment") {
                         categoryStyle = {
-                          backgroundColor: "#ff7074",
+                          backgroundColor: "hsl(var(--chart-4))",
                           color: "white",
                         };
                       } else {
                         categoryStyle = {
-                          backgroundColor: "#27a567",
+                          backgroundColor: "hsl(var(--chart-2))",
                           color: "white",
                         };
                       }
@@ -228,15 +228,15 @@ const MyTable = () => {
                       let amountStyle;
                       if (expense.category === "expense") {
                         amountStyle = {
-                          color: "#ff7074",
+                          color: "hsl(var(--chart-1))",
                         };
                       } else if (expense.category === "investment") {
                         amountStyle = {
-                          color: "#ff7074",
+                          color: "hsl(var(--chart-4))",
                         };
                       } else {
                         amountStyle = {
-                          color: "#27a567",
+                          color: "hsl(var(--chart-2))",
                         };
                       }
                       return (

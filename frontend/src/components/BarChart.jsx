@@ -15,39 +15,33 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 
-const chartData = [
-  { category: "Expense", amount: 1200, fill: "hsl(var(--chart-1))" },
-  { category: "Income", amount: 300, fill: "hsl(var(--chart-2))" },
-  { category: "Investment", amount: 150, fill: "hsl(var(--chart-3))" },
-];
-
 const chartConfig = {
   amount: {
     label: "Amount",
-  },
-  Expense: {
-    label: "Expense",
-    color: "hsl(var(--chart-1))",
   },
   Income: {
     label: "Income",
     color: "hsl(var(--chart-2))",
   },
+  Expense: {
+    label: "Expense",
+    color: "hsl(var(--chart-1))",
+  },
   Investment: {
     label: "Investment",
-    color: "hsl(var(--chart-3))",
+    color: "hsl(var(--chart-4))",
   },
 };
 
-export default function ExpenseBarChart() {
+export default function ExpenseBarChart({ data }) {
   return (
-    <Card>
+    <Card className="flex flex-col">
       <CardHeader>
         <CardTitle>Bar Chart Overview</CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="flex-1 ">
         <ChartContainer config={chartConfig}>
-          <BarChart accessibilityLayer data={chartData}>
+          <BarChart accessibilityLayer data={data}>
             <CartesianGrid vertical={false} />
             <XAxis
               dataKey="category"

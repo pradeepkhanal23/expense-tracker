@@ -7,36 +7,14 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-const chartData = [
-  { category: "Expense", amount: 1200, fill: "hsl(var(--chart-1))" },
-  { category: "Income", amount: 300, fill: "hsl(var(--chart-2))" },
-  { category: "Investment", amount: 150, fill: "hsl(var(--chart-3))" },
-];
 
-const chartConfig = {
-  Expense: {
-    label: "Expense",
-    color: "hsl(var(--chart-1))",
-  },
-  Income: {
-    label: "Income",
-    color: "hsl(var(--chart-2))",
-  },
-  Investment: {
-    label: "Investment",
-    color: "hsl(var(--chart-3))",
-  },
-};
+// we pass it as an empty object because we wanna use the default chart styles and colors
+const chartConfig = {};
 
-export default function Chart() {
+export default function Chart({ data }) {
   const totalExpenses = React.useMemo(() => {
-    return chartData.reduce((acc, curr) => acc + curr.amount, 0);
+    return data.reduce((acc, curr) => acc + curr.amount, 0);
   }, []);
-
-  // Function to get color based on category
-  const getColor = (category) => {
-    return chartConfig[category]?.color || "#8884d8"; // Fallback color
-  };
 
   return (
     <Card className="flex flex-col">
@@ -46,7 +24,7 @@ export default function Chart() {
       <CardContent className="flex-1 pb-0">
         <ChartContainer
           config={chartConfig}
-          className="mx-auto aspect-square max-h-[250px]"
+          className="mx-auto aspect-square max-h-[400px]"
         >
           <PieChart>
             <ChartTooltip
@@ -54,10 +32,10 @@ export default function Chart() {
               content={<ChartTooltipContent hideLabel />}
             />
             <Pie
-              data={chartData}
+              data={data}
               dataKey="amount"
               nameKey="category"
-              innerRadius={60}
+              innerRadius={70}
               strokeWidth={5}
             >
               <Label
@@ -82,7 +60,7 @@ export default function Chart() {
                           y={(viewBox.cy || 0) + 24}
                           className="fill-muted-foreground"
                         >
-                          Total Expenses
+                          Total Cash Flow
                         </tspan>
                       </text>
                     );
