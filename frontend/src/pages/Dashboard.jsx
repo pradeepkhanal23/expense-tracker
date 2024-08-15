@@ -7,13 +7,12 @@ import MyCard from "@/components/MyCard";
 import Header from "@/components/Header";
 import PieChart from "@/components/PieChart";
 import BarChart from "@/components/BarChart";
-import LineChart from "@/components/LineChart";
+// import LineChart from "@/components/LineChart";
 import Skeleton from "@/components/Skeleton";
 
 const Dashboard = () => {
   const [user, setUser] = useState({});
   const [chartData, setChartData] = useState([]);
-  const [lineChartData, setLineChartData] = useState([]);
 
   const [cardValues, setCardValues] = useState({
     totalIncome: 0,
