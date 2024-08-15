@@ -17,10 +17,6 @@ const Header = ({ user }) => {
         <p className="text-muted-foreground text-sm">{user.email}</p>
       </h2>
 
-      <Link to="/">
-        <Button size="sm">Back Home</Button>
-      </Link>
-
       {/* logout button */}
       <DropdownMenu>
         <DropdownMenuTrigger>

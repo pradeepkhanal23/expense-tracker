@@ -14,10 +14,12 @@ const Alert = ({ open, onClose, onConfirm }) => {
     <AlertDialog open={open} onOpenChange={onClose}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Confirm Deletion</AlertDialogTitle>
-          <AlertDialogDescription>
-            Are you sure you want to delete this expense? This action cannot be
-            undone.
+          <AlertDialogTitle className="text-2xl">
+            Confirm Deletion
+          </AlertDialogTitle>
+          <AlertDialogDescription className="text-base">
+            Are you sure you want to delete this transaction? This action cannot
+            be undone.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

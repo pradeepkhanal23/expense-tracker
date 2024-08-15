@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Pencil, PlusCircle } from "lucide-react";
+import { Card, CardContent } from "./ui/card";
 import DatePicker from "./DatePicker";
 import {
   Select,
@@ -103,47 +104,61 @@ const Form = ({ closeModal, editMode, handleUpdate, activeExpense }) => {
   return (
     <form onSubmit={handleSubmit}>
       <div className="space-y-2">
-        <Label htmlFor="description">Description</Label>
+        <Label htmlFor="description" className="text-lg">
+          Description
+        </Label>
         <Input
           id="description"
           type="text"
           placeholder="Enter Description here.."
           value={formData.description}
           onChange={handleChange}
+          className="text-base"
           required
         />
       </div>
       <div className="space-y-2">
-        <Label htmlFor="datepicker">Date</Label>
+        <Label htmlFor="datepicker" className="text-lg">
+          Date
+        </Label>
       </div>
       <div className="mt-1">
         <DatePicker selected={formData.date} onChange={handleDateChange} />
       </div>
       <div className="space-y-2">
-        <Label htmlFor="amount">Amount</Label>
+        <Label htmlFor="amount" className="text-lg">
+          Amount
+        </Label>
         <Input
           id="amount"
           type="number"
-          placeholder="Enter amount"
+          placeholder="Enter amount in dollors (e.g 1200)"
           value={formData.amount}
           onChange={handleChange}
+          className="text-base"
           required
         />
       </div>
       <div className="space-y-2 mt-1">
-        <Label htmlFor="category">Category</Label>
+        <Label htmlFor="category" className="text-lg">
+          Category
+        </Label>
         <Select
           onValueChange={handleCategoryChange}
           value={formData.category}
           required
         >
-          <SelectTrigger className="w-[180px]">
+          <SelectTrigger className="w-[180px] text-base text-muted-foreground">
             <SelectValue placeholder="Select a category" />
           </SelectTrigger>
           <SelectContent>
             {categoryOptions.map((category, i) => {
               return (
-                <SelectItem key={i} value={category.value}>
+                <SelectItem
+                  key={i}
+                  value={category.value}
+                  className="text-base"
+                >
                   {category.label}
                 </SelectItem>
               );
@@ -152,16 +167,16 @@ const Form = ({ closeModal, editMode, handleUpdate, activeExpense }) => {
         </Select>
       </div>
       <div className="space-y-1 mt-4">
-        <Button type="submit" className="flex items-center gap-x-2">
+        <Button type="submit" className="flex items-center text-base gap-x-2">
           {editMode ? (
             <>
-              <Pencil className="h-3.5 w-3.5" />
-              <span className="sm:whitespace-nowrap">Update Expense</span>
+              <Pencil className="h-5 w-5" />
+              <span className="sm:whitespace-nowrap ">Update Transaction</span>
             </>
           ) : (
             <>
-              <PlusCircle className="h-3.5 w-3.5" />
-              <span className="sm:whitespace-nowrap">Add Expense</span>
+              <PlusCircle className="h-5 w-5" />
+              <span className="sm:whitespace-nowrap ">Add Transaction</span>
             </>
           )}
         </Button>

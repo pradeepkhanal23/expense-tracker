@@ -1,6 +1,7 @@
 import heroImg from "../assets/images/finance.jpg";
 import { Link } from "react-router-dom";
 import AuthService from "../utils/auth";
+import { Button } from "./ui/button";
 
 const Hero = () => {
   return (
@@ -18,11 +19,10 @@ const Hero = () => {
                   make informed decisions about your spending.
                 </p>
               </div>
-              <Link
-                to={`${AuthService.loggedIn() ? "/dashboard" : "/auth"}`}
-                className="w-full md:mr-auto inline-flex h-10 md:w-1/2  items-center justify-center rounded-md bg-primary px-8  font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
-              >
-                Start Tracking
+              <Link to={`${AuthService.loggedIn() ? "/dashboard" : "/auth"}`}>
+                <Button className="text-base w-full md:w-1/3 lg:w-1/2">
+                  Start Tracking
+                </Button>
               </Link>
             </div>
             <div className="flex-1">

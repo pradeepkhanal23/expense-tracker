@@ -13,7 +13,7 @@ const Navbar = () => {
         <nav className="ml-auto flex gap-4 sm:gap-6">
           {AuthService.loggedIn() ? (
             <>
-              <Button>
+              <Button size="sm" className="text-base">
                 <Link to="/dashboard">Go to Dashboard</Link>
               </Button>
             </>

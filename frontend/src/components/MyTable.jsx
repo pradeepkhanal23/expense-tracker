@@ -147,13 +147,13 @@ const MyTable = () => {
       />
       {/* Dialog */}
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className="sm:max-w-[425px] text-3xl">
           <DialogHeader>
-            <DialogTitle className="font-bold text-2xl">
-              {editMode ? "Update Expense" : " Add Expense"}
+            <DialogTitle className="font-bold text-3xl">
+              {editMode ? "Update Transaction" : " Add Transaction"}
             </DialogTitle>
-            <DialogDescription>
-              {editMode ? "Update your expense" : " Add your expense"}
+            <DialogDescription className="text-base">
+              {editMode ? "Update your Transaction" : " Add your Transaction "}
               here. Click save when you're done.
             </DialogDescription>
           </DialogHeader>
@@ -169,20 +169,18 @@ const MyTable = () => {
       {/* Table */}
       <div className="ml-auto flex items-center gap-x-2">
         <Button
-          size="sm"
           type="submit"
-          className="flex items-center gap-x-2 text-sm md:text-base"
+          className="flex items-center gap-x-2 text-base"
           onClick={() => {
             setOpen(!open);
           }}
         >
-          <PlusCircle className="h-3.5 w-3.5" />
-          <span className=" sm:whitespace-nowrap ">Add Expense</span>
+          <PlusCircle className="h-4 w-4" />
+          <span className=" sm:whitespace-nowrap ">Add Transaction</span>
         </Button>
       </div>
       {expenses && expenses.length > 0 ? (
         <>
-          {" "}
           <Card x-chunk="dashboard-05-chunk-3">
             <CardHeader className="px-7">
               <CardTitle>Expenses</CardTitle>
@@ -209,23 +207,64 @@ const MyTable = () => {
                 <TableBody>
                   {expenses &&
                     expenses.map((expense, i) => {
+                      let categoryStyle;
+                      if (expense.category === "expense") {
+                        categoryStyle = {
+                          backgroundColor: "#ff7074",
+                          color: "white",
+                        };
+                      } else if (expense.category === "investment") {
+                        categoryStyle = {
+                          backgroundColor: "#ff7074",
+                          color: "white",
+                        };
+                      } else {
+                        categoryStyle = {
+                          backgroundColor: "#27a567",
+                          color: "white",
+                        };
+                      }
+
+                      let amountStyle;
+                      if (expense.category === "expense") {
+                        amountStyle = {
+                          color: "#ff7074",
+                        };
+                      } else if (expense.category === "investment") {
+                        amountStyle = {
+                          color: "#ff7074",
+                        };
+                      } else {
+                        amountStyle = {
+                          color: "#27a567",
+                        };
+                      }
                       return (
                         <TableRow
-                          className="hover:bg-accent cursor-pointer"
+                          className="hover:bg-accent cursor-pointer  text-lg"
                           key={i}
                         >
-                          <TableCell className="table-cell capitalize">
+                          <TableCell className="table-cell capitalize text-gray-600">
                             {expense.description}
                           </TableCell>
-                          <TableCell className="hidden sm:table-cell capitalize">
-                            <Badge className="text-sm" variant="secondary">
+                          <TableCell
+                            className={`hidden sm:table-cell capitalize`}
+                          >
+                            <Badge
+                              className="text-sm"
+                              variant="secondary"
+                              style={categoryStyle}
+                            >
                               {expense.category}
                             </Badge>
                           </TableCell>
                           <TableCell className="hidden md:table-cell">
                             {expense.date}
                           </TableCell>
-                          <TableCell className="text-right">
+                          <TableCell
+                            className="text-right font-bold"
+                            style={amountStyle}
+                          >
                             $ {expense.amount}
                           </TableCell>
                           <TableCell className="text-right flex items-center justify-end gap-x-1 ">
@@ -254,8 +293,8 @@ const MyTable = () => {
         </>
       ) : (
         <>
-          <p className="text-center text-xl text-muted-foreground">
-            There is no data to display. Please add some expenses.
+          <p className="text-center text-lg text-muted-foreground">
+            There is no data to display. Please add some transactions.
           </p>
         </>
       )}
