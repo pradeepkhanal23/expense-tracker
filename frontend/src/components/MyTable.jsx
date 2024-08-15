@@ -42,9 +42,11 @@ const MyTable = () => {
   // a flag to keep track of the edit mode so that we can conditionally render the title and other labels in the form
   const [editMode, setEditMode] = useState(false);
 
-  const openModal = () => {
+  const openModal = (editMode = false) => {
+    setEditMode(editMode);
     setOpen(true);
   };
+
   const closeModal = () => {
     setOpen(false);
     setEditMode(false);
@@ -70,11 +72,16 @@ const MyTable = () => {
     ],
   });
 
+  // Add Transaction button handler
+  const handleAddTransaction = () => {
+    setActiveExpense(null);
+    openModal(false); // pass false to open in add mode
+  };
+
   // edit handler
   const handleEdit = (expense) => {
     setActiveExpense(expense);
-    setEditMode(true);
-    openModal();
+    openModal(true);
   };
 
   // delete handler
@@ -171,9 +178,7 @@ const MyTable = () => {
         <Button
           type="submit"
           className="flex items-center gap-x-2 text-base"
-          onClick={() => {
-            setOpen(!open);
-          }}
+          onClick={handleAddTransaction}
         >
           <PlusCircle className="h-4 w-4" />
           <span className=" sm:whitespace-nowrap ">Add Transaction</span>

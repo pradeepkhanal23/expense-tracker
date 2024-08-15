@@ -37,7 +37,7 @@ export default function ExpenseBarChart({ data }) {
   return (
     <Card className="flex flex-col">
       <CardHeader>
-        <CardTitle>Bar Chart Overview</CardTitle>
+        <CardTitle className="text-center">Bar Chart Overview</CardTitle>
       </CardHeader>
       <CardContent className="flex-1 ">
         <ChartContainer config={chartConfig}>
