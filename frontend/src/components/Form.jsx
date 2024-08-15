@@ -104,7 +104,7 @@ const Form = ({ closeModal, editMode, handleUpdate, activeExpense }) => {
   return (
     <form onSubmit={handleSubmit}>
       <div className="space-y-2">
-        <Label htmlFor="description" className="text-lg">
+        <Label htmlFor="description" className="text-base">
           Description
         </Label>
         <Input
@@ -118,7 +118,7 @@ const Form = ({ closeModal, editMode, handleUpdate, activeExpense }) => {
         />
       </div>
       <div className="space-y-2">
-        <Label htmlFor="datepicker" className="text-lg">
+        <Label htmlFor="datepicker" className="text-base">
           Date
         </Label>
       </div>
@@ -126,7 +126,7 @@ const Form = ({ closeModal, editMode, handleUpdate, activeExpense }) => {
         <DatePicker selected={formData.date} onChange={handleDateChange} />
       </div>
       <div className="space-y-2">
-        <Label htmlFor="amount" className="text-lg">
+        <Label htmlFor="amount" className="text-base">
           Amount
         </Label>
         <Input
@@ -140,7 +140,7 @@ const Form = ({ closeModal, editMode, handleUpdate, activeExpense }) => {
         />
       </div>
       <div className="space-y-2 mt-1">
-        <Label htmlFor="category" className="text-lg">
+        <Label htmlFor="category" className="text-base">
           Category
         </Label>
         <Select

@@ -24,7 +24,8 @@ const Dashboard = () => {
   //fetching the user data
   const { loading, data } = useQuery(GET_ME, {
     // this will make sure that the data is refresed after every 100 miliseconds
-    pollInterval: 100,
+    pollInterval: 1000,
+    nextFetchPolicy: "cache-first",
   });
 
   // calculating all the totals for the display cards

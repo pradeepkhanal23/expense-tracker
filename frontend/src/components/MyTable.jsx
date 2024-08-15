@@ -147,7 +147,7 @@ const MyTable = () => {
       />
       {/* Dialog */}
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="sm:max-w-[425px] text-3xl">
+        <DialogContent className="sm:max-w-[425px] text-xl">
           <DialogHeader>
             <DialogTitle className="font-bold text-3xl">
               {editMode ? "Update Transaction" : " Add Transaction"}
