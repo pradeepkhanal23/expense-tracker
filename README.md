@@ -2,11 +2,11 @@
 
 ## Overview
 
-Welcome to the Expense Tracker, a powerful, user-friendly web application designed to help you manage your finances effectively. Built with the MERN stack and utilizing GraphQL for seamless data management, this app provides an intuitive interface to track your expenses, set budgets, and gain insights into your spending habits.
+Welcome to the Expense Tracker, a powerful, user-friendly web application designed to help you manage your finances effectively. Built with the MERN stack and utilizing GraphQL for seamless data management, this app provides an intuitive interface to track your expenses and gain insights into your spending habits.
 
 ## Live Demo
 
-Check out the live version of the app here: [Expense Tracker Live Demo.](https://expense-tracker-6krc.onrender.com/)
+Check out the live version of the app here: [Live Demo.](https://expense-tracker-6krc.onrender.com/)
 
 ## Screenshots
 
@@ -43,7 +43,7 @@ _Description: delete expense modal._
 ## Features
 
 - **Expense Management**: Easily add,edit and delete expenses.
-- **Budget Tracking**: Set budgets for different categories and track your spending against them.
+- **Budget Tracking**: Set expenses/incomes/investments for different categories and track your spending/incomes against them.
 - **Data Visualization**: Visualize your expenses with dynamic charts.
 - **User Authentication**: Secure login and signup system using jwt.
 - **Responsive Design**: Fully responsive UI built with Shadcn and Tailwind CSS, ensuring a seamless experience on all devices.
@@ -73,7 +73,7 @@ _Description: delete expense modal._
 Once the app is running, you can:
 
 1.  **Sign Up/ Log In**: Create a new account or log in with existing credentials.
-2.  **Manage Exoenses**:Add, edit, or delete expenses from your dashboard.
+2.  **Manage Exoenses**: Add, edit, or delete expenses from your dashboard.
 3.  **Data Overview**: Analyze your spending habits with detailed table and charts.
 
 If you have any questions, feel free to reach out:
