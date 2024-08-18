@@ -20,7 +20,7 @@ const Hero = () => {
                 </p>
               </div>
               <Link to={`${AuthService.loggedIn() ? "/dashboard" : "/auth"}`}>
-                <Button className="text-base w-full md:w-1/3 lg:w-1/2">
+                <Button className="text-base tracking-wide w-full md:w-1/3 lg:w-1/2">
                   Start Tracking
                 </Button>
               </Link>
