@@ -5,6 +5,7 @@ import Auth from "./pages/Auth";
 import Hero from "./components/Hero";
 import MainLayout from "./components/MainLayout";
 import DashLayout from "./components/DashLayout";
+import { Toaster } from "@/components/ui/toaster";
 
 // All apollo client related imports
 import {
@@ -81,6 +82,7 @@ const router = createBrowserRouter([
 const App = () => {
   return (
     <ApolloProvider client={client}>
+      <Toaster />
       <RouterProvider router={router} />
     </ApolloProvider>
   );

@@ -4,13 +4,13 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
-import { User } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast";
 import AuthService from "../utils/auth.js";
 import ToggleTheme from "./ToggleTheme.jsx";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const Header = ({ user }) => {
+  const { toast } = useToast();
   return (
     <header className="sticky top-0 z-30 mx-auto w-full flex h-20 items-center justify-between gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6 sm:justify-end">
       <h2 className="text-xl md:text-2xl font-semibold justify-end w-full">
@@ -32,7 +32,15 @@ const Header = ({ user }) => {
         <DropdownMenuContent align="end">
           <DropdownMenuItem
             onClick={() => {
-              AuthService.logout();
+              toast({
+                variant: "success",
+                title: "User is loggin out..",
+              });
+
+              //delaying the logout slightly so that we can display the toast
+              setTimeout(() => {
+                AuthService.logout();
+              }, 1000);
             }}
           >
             Logout

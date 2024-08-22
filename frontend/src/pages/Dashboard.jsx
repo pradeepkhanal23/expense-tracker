@@ -7,6 +7,7 @@ import MyCard from "@/components/MyCard";
 import Header from "@/components/Header";
 import PieChart from "@/components/PieChart";
 import BarChart from "@/components/BarChart";
+import { useToast } from "@/components/ui/use-toast";
 
 import Skeleton from "@/components/Skeleton";
 import {
@@ -19,6 +20,8 @@ import {
 import { Link } from "react-router-dom";
 
 const Dashboard = () => {
+  const { toast } = useToast();
+
   const [user, setUser] = useState({});
   const [chartData, setChartData] = useState([]);
 
@@ -99,6 +102,13 @@ const Dashboard = () => {
         totalIncome,
         totalExpenses,
         balance,
+      });
+
+      // Show toast when user data is successfully loaded
+      toast({
+        variant: "success",
+        title: "Logged in successfully!!!",
+        description: `Welcome back, ${data?.me?.username}!`,
       });
     }
   }, [data]);

@@ -1,3 +1,4 @@
+import React from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -61,13 +62,8 @@ const Auth = () => {
     } catch (error) {
       toast({
         variant: "destructive",
-        title: (
-          <span className="text-lg font-bold text-white tracking-wide">
-            Login Failed !!!
-          </span>
-        ),
-        description: <span className="text-sm ">{error.message}</span>,
-        className: "bg-red-500  p-6 rounded-lg shadow-xl",
+        title: "Login Failed!!!",
+        description: error.message,
       });
     }
   };
@@ -94,13 +90,8 @@ const Auth = () => {
       console.error(error.message);
       toast({
         variant: "destructive",
-        title: (
-          <span className="text-lg font-bold text-white tracking-wide">
-            Signup Failed !!!
-          </span>
-        ),
-        description: <span className="text-sm ">{error.message}</span>,
-        className: "bg-red-500  p-6 rounded-lg shadow-xl",
+        title: "Signup Failed!!!",
+        description: error.message,
       });
     }
   };
