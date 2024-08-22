@@ -154,7 +154,7 @@ const MyTable = () => {
       />
       {/* Dialog */}
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="sm:max-w-[425px] text-xl">
+        <DialogContent className="sm:max-w-[425px] ">
           <DialogHeader>
             <DialogTitle className="font-bold text-3xl">
               {editMode ? "Update Transaction" : " Add Transaction"}
@@ -249,7 +249,7 @@ const MyTable = () => {
                           className="hover:bg-accent cursor-pointer  text-lg"
                           key={i}
                         >
-                          <TableCell className="table-cell capitalize text-gray-600">
+                          <TableCell className="table-cell capitalize text-gray-600 dark:text-white">
                             {expense.description}
                           </TableCell>
                           <TableCell
@@ -272,10 +272,10 @@ const MyTable = () => {
                           >
                             $ {expense.amount}
                           </TableCell>
-                          <TableCell className="text-right flex items-center justify-end gap-x-1 ">
+                          <TableCell className="text-right flex items-center justify-end gap-x-2 ">
                             <Button
                               size="sm"
-                              className="bg-slate-700 "
+                              className="bg-slate-700 dark:bg-white"
                               onClick={() => handleEdit(expense)}
                             >
                               <Pencil className="h-4 w-4" />

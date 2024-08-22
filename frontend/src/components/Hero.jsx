@@ -29,7 +29,7 @@ const Hero = () => {
               <img
                 src={heroImg}
                 alt="Hero"
-                className="w-full md:w-2/3 mx-auto lg:w-full lg:order-last"
+                className="w-full md:w-2/3 mx-auto lg:w-full lg:order-last  "
               />
             </div>
           </div>

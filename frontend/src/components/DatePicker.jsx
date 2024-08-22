@@ -21,11 +21,7 @@ export default function DatePicker({ selected, onChange }) {
           )}
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
-          {selected ? (
-            dateFormat(selected)
-          ) : (
-            <span className="text-base">Pick a date</span>
-          )}
+          {selected ? dateFormat(selected) : <span>Pick a date</span>}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">

@@ -14,6 +14,7 @@ import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER, REGISTER_USER } from "@/utils/mutations";
 import AuthService from "@/utils/auth";
+import { useToast } from "@/components/ui/use-toast";
 
 const Auth = () => {
   const [activeTab, setActiveTab] = useState("signin");
@@ -23,6 +24,8 @@ const Auth = () => {
     password: "",
     username: "",
   });
+
+  const { toast } = useToast();
 
   // using the useMutation hook to extract the login method
   const [login] = useMutation(LOGIN_USER);
@@ -56,7 +59,16 @@ const Auth = () => {
         password: "",
       });
     } catch (error) {
-      console.error(error);
+      toast({
+        variant: "destructive",
+        title: (
+          <span className="text-lg font-bold text-white tracking-wide">
+            Login Failed !!!
+          </span>
+        ),
+        description: <span className="text-sm ">{error.message}</span>,
+        className: "bg-red-500  p-6 rounded-lg shadow-xl",
+      });
     }
   };
 
@@ -79,7 +91,17 @@ const Auth = () => {
         username: "",
       });
     } catch (error) {
-      console.error(error);
+      console.error(error.message);
+      toast({
+        variant: "destructive",
+        title: (
+          <span className="text-lg font-bold text-white tracking-wide">
+            Signup Failed !!!
+          </span>
+        ),
+        description: <span className="text-sm ">{error.message}</span>,
+        className: "bg-red-500  p-6 rounded-lg shadow-xl",
+      });
     }
   };
 

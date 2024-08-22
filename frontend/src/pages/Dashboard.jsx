@@ -7,8 +7,16 @@ import MyCard from "@/components/MyCard";
 import Header from "@/components/Header";
 import PieChart from "@/components/PieChart";
 import BarChart from "@/components/BarChart";
-// import LineChart from "@/components/LineChart";
+
 import Skeleton from "@/components/Skeleton";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import { Link } from "react-router-dom";
 
 const Dashboard = () => {
   const [user, setUser] = useState({});
@@ -116,6 +124,23 @@ const Dashboard = () => {
 
               {/* Main Section */}
               <main className=" p-4 sm:px-6 sm:py-0 md:gap-8 container ">
+                <div className="my-4">
+                  <Breadcrumb className="flex">
+                    <BreadcrumbList>
+                      <BreadcrumbItem>
+                        <BreadcrumbLink asChild>
+                          <Link to="/">Home</Link>
+                        </BreadcrumbLink>
+                      </BreadcrumbItem>
+                      <BreadcrumbSeparator />
+                      <BreadcrumbItem>
+                        <BreadcrumbLink asChild>
+                          <Link to="#">Dashboard</Link>
+                        </BreadcrumbLink>
+                      </BreadcrumbItem>
+                    </BreadcrumbList>
+                  </Breadcrumb>
+                </div>
                 <div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
                   <div className="grid gap-4  grid-cols-1 md:grid-cols-2 lg:grid-cols-3  ">
                     <MyCard
@@ -131,7 +156,7 @@ const Dashboard = () => {
                     <MyCard
                       title="Overall Balance"
                       amount={cardValues.balance}
-                      color="#4169e1"
+                      color="hsl(var(--chart-6))"
                     />
                   </div>
 
