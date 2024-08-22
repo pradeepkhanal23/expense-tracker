@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Pencil, PlusCircle } from "lucide-react";
-import { Card, CardContent } from "./ui/card";
+import { useToast } from "@/components/ui/use-toast";
 import DatePicker from "./DatePicker";
 import {
   Select,
@@ -31,6 +31,8 @@ const Form = ({ closeModal, editMode, handleUpdate, activeExpense }) => {
     amount: "",
     category: "",
   });
+
+  const { toast } = useToast();
 
   // we want to populate the form with activeExpense if we are in edit mode
   useEffect(() => {
@@ -92,6 +94,10 @@ const Form = ({ closeModal, editMode, handleUpdate, activeExpense }) => {
             date: dateFormat(formData.date), //we called our utility method that converts the date from the date picker to a string in the required format
             category: formData.category,
           },
+        });
+        toast({
+          variant: "success",
+          title: "Transaction added successfully!",
         });
       } catch (error) {
         console.error(error);

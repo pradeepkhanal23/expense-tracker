@@ -21,7 +21,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-
+import { useToast } from "@/components/ui/use-toast";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "./ui/button";
 import { useQuery, useMutation } from "@apollo/client";
@@ -33,6 +33,7 @@ import { dateFormat } from "@/utils/dateFormat";
 import Alert from "@/components/Alert";
 
 const MyTable = () => {
+  const { toast } = useToast();
   const [expenses, setExpenses] = useState(null);
   const [open, setOpen] = useState(false);
   const { data, error, loading } = useQuery(GET_EXPENSES);
@@ -97,6 +98,10 @@ const MyTable = () => {
         await deleteExpense({
           variables: { _id: activeExpense._id },
         });
+        toast({
+          variant: "success",
+          title: "Transaction deleted successfully!",
+        });
       } catch (error) {
         console.error(error);
       } finally {
@@ -116,6 +121,10 @@ const MyTable = () => {
           date: dateFormat(updatedExpense.date),
           category: updatedExpense.category,
         },
+      });
+      toast({
+        variant: "success",
+        title: "Transaction updated successfully!",
       });
     } catch (error) {
       console.error(error);

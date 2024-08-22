@@ -104,12 +104,12 @@ const Dashboard = () => {
         balance,
       });
 
-      // Show toast when user data is successfully loaded
-      toast({
-        variant: "success",
-        title: "Logged in successfully!!!",
-        description: `Welcome back, ${data?.me?.username}!`,
-      });
+      // // Show toast when user data is successfully loaded
+      // toast({
+      //   variant: "success",
+      //   title: "Logged in successfully!!!",
+      //   description: `Welcome back, ${data?.me?.username}!`,
+      // });
     }
   }, [data]);
 
