@@ -11,10 +11,10 @@ const Hero = () => {
           <div className="flex flex-col space-y-10 lg:flex-row md:space-x-10 ">
             <div className="flex flex-col justify-center space-y-4 flex-1">
               <div className="space-y-2">
-                <h1 className="text-4xl lg:text-5xl font-bold tracking-tighter ">
+                <h1 className="text-4xl lg:text-5xl font-bold tracking-normal ">
                   Take Control of Your Expenses
                 </h1>
-                <p className="text-justify text-muted-foreground md:text-lg">
+                <p className="text-justify text-muted-foreground md:text-lg tracking-wide">
                   Our expense tracker helps you stay on top of your finances and
                   make informed decisions about your spending.
                 </p>
@@ -28,7 +28,7 @@ const Hero = () => {
             <div className="flex-1">
               <img
                 src={heroImg}
-                alt="Hero"
+                alt="Hero Image"
                 className="w-full md:w-2/3 mx-auto lg:w-full lg:order-last  "
               />
             </div>

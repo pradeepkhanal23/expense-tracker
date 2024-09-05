@@ -99,7 +99,7 @@ const MyTable = () => {
           variables: { _id: activeExpense._id },
         });
         toast({
-          variant: "success",
+          variant: "destructive",
           title: "Transaction deleted successfully!",
         });
       } catch (error) {

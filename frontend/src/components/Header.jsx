@@ -33,9 +33,12 @@ const Header = ({ user }) => {
           <DropdownMenuItem
             onClick={() => {
               toast({
-                variant: "success",
+                variant: "destructive",
                 title: "User is loggin out..",
               });
+
+              // resetting the welcome messsage flag on logout
+              localStorage.setItem("hasSeenWelcome", "false");
 
               //delaying the logout slightly so that we can display the toast
               setTimeout(() => {

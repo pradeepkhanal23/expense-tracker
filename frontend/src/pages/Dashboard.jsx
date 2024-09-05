@@ -18,6 +18,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Link } from "react-router-dom";
+import { welcomeMessage } from "@/utils/helpers";
 
 const Dashboard = () => {
   const { toast } = useToast();
@@ -104,14 +105,19 @@ const Dashboard = () => {
         balance,
       });
 
-      // // Show toast when user data is successfully loaded
-      // toast({
-      //   variant: "success",
-      //   title: "Logged in successfully!!!",
-      //   description: `Welcome back, ${data?.me?.username}!`,
-      // });
+      // checking for welcome message
+      if (!welcomeMessage()) {
+        toast({
+          variant: "success",
+          title: `Welcome , ${data?.me?.username}`,
+          description: "Lets get tracking!!",
+        });
+
+        // setting flag in the localstorage so that the welcome message in not shown again
+        localStorage.setItem("hasSeenWelcome", "true");
+      }
     }
-  }, [data]);
+  }, [data, toast]);
 
   if (loading) {
     return (

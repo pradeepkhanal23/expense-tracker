@@ -10,7 +10,9 @@ const Navbar = () => {
       <header className="px-10 h-20 flex items-center border-b dark:border-b-gray-100 ">
         <Link href="/" className="flex items-center justify-center">
           <MountainIcon className="h-8 w-8" />
-          <span className="ml-2 hidden md:block text-xl">Expense Tracker</span>
+          <span className="ml-2 hidden md:block text-xl font-medium capitalize mt-1">
+            Expense Tracker
+          </span>
         </Link>
 
         <nav className="ml-auto flex gap-4 sm:gap-6">
