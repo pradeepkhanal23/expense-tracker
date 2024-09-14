@@ -6,6 +6,8 @@ import Hero from "./components/Hero";
 import MainLayout from "./components/MainLayout";
 import DashLayout from "./components/DashLayout";
 import { Toaster } from "@/components/ui/toaster";
+import PieChart from "@/components/PieChart";
+import BarChart from "@/components/BarChart";
 
 // All apollo client related imports
 import {
@@ -16,6 +18,7 @@ import {
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import ProtectedRoute from "./pages/ProtectedRoute";
+import MyTable from "./components/MyTable";
 
 // it creates the HTTP link to our GraphQL server
 const httpLink = createHttpLink({
@@ -72,6 +75,30 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <Dashboard />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "table",
+        element: (
+          <ProtectedRoute>
+            <MyTable />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "piechart",
+        element: (
+          <ProtectedRoute>
+            <PieChart />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "barchart",
+        element: (
+          <ProtectedRoute>
+            <BarChart />
           </ProtectedRoute>
         ),
       },

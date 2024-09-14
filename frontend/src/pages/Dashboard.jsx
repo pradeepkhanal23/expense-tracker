@@ -1,23 +1,12 @@
 import MyTable from "../components/MyTable";
-import Sidebar from "@/components/Sidebar";
 import { useQuery } from "@apollo/client";
 import { GET_ME } from "../utils/queries";
 import { useState, useEffect } from "react";
 import MyCard from "@/components/MyCard";
-import Header from "@/components/Header";
 import PieChart from "@/components/PieChart";
 import BarChart from "@/components/BarChart";
 import { useToast } from "@/components/ui/use-toast";
-
 import Skeleton from "@/components/Skeleton";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
-import { Link } from "react-router-dom";
 import { welcomeMessage } from "@/utils/helpers";
 
 const Dashboard = () => {
@@ -131,66 +120,37 @@ const Dashboard = () => {
     <>
       {user && (
         <>
-          <div className="flex min-h-screen w-full flex-col bg-muted/40">
-            {/* Sidebar */}
-            <Sidebar />
-            <div className="flex flex-col  sm:gap-4 sm:py-4 sm:pl-14 ">
-              {/* Sticky Header */}
-              <Header user={user} />
+          <div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
+            <div className="grid gap-4  grid-cols-1 md:grid-cols-2 lg:grid-cols-3  ">
+              <MyCard
+                title="Total Income"
+                amount={cardValues.totalIncome}
+                color="hsl(var(--chart-2))"
+              />
+              <MyCard
+                title="Total Expenses"
+                amount={cardValues.totalExpenses}
+                color="hsl(var(--chart-1))"
+              />
+              <MyCard
+                title="Overall Balance"
+                amount={cardValues.balance}
+                color="hsl(var(--chart-6))"
+              />
+            </div>
 
-              {/* Main Section */}
-              <main className=" p-4 sm:px-6 sm:py-0 md:gap-8 container ">
-                <div className="my-4">
-                  <Breadcrumb className="flex">
-                    <BreadcrumbList>
-                      <BreadcrumbItem>
-                        <BreadcrumbLink asChild>
-                          <Link to="/">Home</Link>
-                        </BreadcrumbLink>
-                      </BreadcrumbItem>
-                      <BreadcrumbSeparator />
-                      <BreadcrumbItem>
-                        <BreadcrumbLink asChild>
-                          <Link to="#">Dashboard</Link>
-                        </BreadcrumbLink>
-                      </BreadcrumbItem>
-                    </BreadcrumbList>
-                  </Breadcrumb>
-                </div>
-                <div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
-                  <div className="grid gap-4  grid-cols-1 md:grid-cols-2 lg:grid-cols-3  ">
-                    <MyCard
-                      title="Total Income"
-                      amount={cardValues.totalIncome}
-                      color="hsl(var(--chart-2))"
-                    />
-                    <MyCard
-                      title="Total Expenses"
-                      amount={cardValues.totalExpenses}
-                      color="hsl(var(--chart-1))"
-                    />
-                    <MyCard
-                      title="Overall Balance"
-                      amount={cardValues.balance}
-                      color="hsl(var(--chart-6))"
-                    />
-                  </div>
+            <div className="grid gap-4  grid-cols-1 md:grid-cols-2 ">
+              {/* Charts Section */}
+              {user.expenses && user.expenses.length > 0 && (
+                <>
+                  <PieChart data={chartData} />
+                  <BarChart data={chartData} />
+                </>
+              )}
+            </div>
 
-                  <div className="grid gap-4  grid-cols-1 md:grid-cols-2 ">
-                    {/* Charts Section */}
-                    {user.expenses && user.expenses.length > 0 && (
-                      <>
-                        <PieChart data={chartData} />
-                        <BarChart data={chartData} />
-                      </>
-                    )}
-                  </div>
-
-                  <div className="grid gap-4  grid-cols-1">
-                    <MyTable />
-                  </div>
-                </div>
-              </main>
+            <div className="grid gap-4  grid-cols-1">
+              <MyTable />
             </div>
           </div>
         </>
