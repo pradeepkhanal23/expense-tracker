@@ -78,7 +78,7 @@ const MyTable = () => {
   // When the user selects a filter (e.g., "Amount (Highest)", "Category (Income)"), the filter choice is stored in the selectedFilter state. This state is updated via the setSelectedFilter function whenever a user clicks on a filter option.
 
   // By storing the filter choice in a state variable, React can automatically re-render the component when the filter changes. This triggers the useEffect hook that depends on selectedFilter to re-filter the list of expenses based on the selected criteria.
-  const [selectedFilter, setSelectedFilter] = useState("");
+  const [selectedFilter, setSelectedFilter] = useState("All");
 
   const openModal = (editMode = false) => {
     setEditMode(editMode);
@@ -209,9 +209,14 @@ const MyTable = () => {
       filtered = filtered.filter((expense) => expense.category === "income");
     } else if (selectedFilter === "Category (Expense)") {
       filtered = filtered.filter((expense) => expense.category === "expense");
+    } else {
+      filtered = filtered.filter(
+        (expense) => expense.category === "investment"
+      );
     }
 
-    setFilteredExpenses(filtered);
+    // If "All" is selected, do not apply any additional filters
+    setFilteredExpenses(selectedFilter === "All" ? expenses : filtered);
   }, [searchTerm, selectedFilter, expenses]);
 
   if (loading) {
@@ -289,6 +294,12 @@ const MyTable = () => {
             <DropdownMenuLabel>Filter by</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuCheckboxItem
+              checked={selectedFilter === "All"}
+              onClick={() => handleFilterChange("All")}
+            >
+              All
+            </DropdownMenuCheckboxItem>
+            <DropdownMenuCheckboxItem
               checked={selectedFilter === "Amount (Highest)"}
               onClick={() => handleFilterChange("Amount (Highest)")}
             >
@@ -311,6 +322,12 @@ const MyTable = () => {
               onClick={() => handleFilterChange("Category (Expense)")}
             >
               Category (Expense)
+            </DropdownMenuCheckboxItem>
+            <DropdownMenuCheckboxItem
+              checked={selectedFilter === "Category (Investement)"}
+              onClick={() => handleFilterChange("Category (Investement)")}
+            >
+              Category (Investment)
             </DropdownMenuCheckboxItem>
           </DropdownMenuContent>
         </DropdownMenu>
