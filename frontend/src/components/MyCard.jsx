@@ -16,13 +16,13 @@ const MyCard = ({ title, amount, color }) => {
           {title}
         </CardTitle>
         <DollarSign
-          className={`h-10 w-10 text-muted-foreground`}
+          className={`h-7 w-7 text-muted-foreground`}
           style={colorStyle}
         />
       </CardHeader>
       <CardContent>
         <div
-          className="text-4xl font-extrabold tracking-wide"
+          className="text-2xl lg:text-3xl font-extrabold tracking-wide"
           style={colorStyle}
         >
           ${amount}

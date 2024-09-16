@@ -40,9 +40,12 @@ import { DELETE_EXPENSE, UPDATE_EXPENSE } from "@/utils/mutations";
 import Form from "./Form";
 import { dateFormat } from "@/utils/dateFormat";
 import Alert from "@/components/Alert";
+import { useLocation } from "react-router-dom";
 
 const MyTable = () => {
   const { toast } = useToast();
+
+  const location = useLocation();
 
   // to store all the expenses got from the query
   const [expenses, setExpenses] = useState([]);
@@ -71,7 +74,7 @@ const MyTable = () => {
   // When the user selects a filter (e.g., "Amount (Highest)", "Category (Income)"), the filter choice is stored in the selectedFilter state. This state is updated via the setSelectedFilter function whenever a user clicks on a filter option.
 
   // By storing the filter choice in a state variable, React can automatically re-render the component when the filter changes. This triggers the useEffect hook that depends on selectedFilter to re-filter the list of expenses based on the selected criteria.
-  const [selectedFilter, setSelectedFilter] = useState("All");
+  const [selectedFilter, setSelectedFilter] = useState("");
 
   const openModal = (editMode = false) => {
     setEditMode(editMode);
@@ -202,14 +205,13 @@ const MyTable = () => {
       filtered = filtered.filter((expense) => expense.category === "income");
     } else if (selectedFilter === "Category (Expense)") {
       filtered = filtered.filter((expense) => expense.category === "expense");
-    } else {
+    } else if (selectedFilter === "Category (Investment)") {
       filtered = filtered.filter(
         (expense) => expense.category === "investment"
       );
     }
 
-    // If "All" is selected, do not apply any additional filters
-    setFilteredExpenses(selectedFilter === "All" ? expenses : filtered);
+    setFilteredExpenses(filtered);
   }, [searchTerm, selectedFilter, expenses]);
 
   if (loading) {
@@ -263,67 +265,75 @@ const MyTable = () => {
 
       <div className="md:ml-auto flex items-center gap-x-2">
         <div className=" w-full my-3 relative">
-          <Input
-            type="search"
-            placeholder="Search for transactions..."
-            className="rounded-lg bg-background  max-w-sm ml-auto"
-            value={searchTerm}
-            onChange={handleSearch}
-          />
+          {location.pathname === "/dashboard/table" && (
+            <>
+              <Input
+                type="search"
+                placeholder="Search for transactions..."
+                className="rounded-lg bg-background  max-w-sm ml-auto"
+                value={searchTerm}
+                onChange={handleSearch}
+              />
+            </>
+          )}
           {/* <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground " /> */}
         </div>
 
         {/* Filter Button */}
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="sm" className="gap-2">
-              <ListFilter className="h-5 w-5" />
-              <span className="sr-only md:not-sr-only md:whitespace-nowrap">
-                Filter
-              </span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Filter by</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuCheckboxItem
-              checked={selectedFilter === "All"}
-              onClick={() => handleFilterChange("All")}
-            >
-              All
-            </DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem
-              checked={selectedFilter === "Amount (Highest)"}
-              onClick={() => handleFilterChange("Amount (Highest)")}
-            >
-              Amount (Highest)
-            </DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem
-              checked={selectedFilter === "Amount (Lowest)"}
-              onClick={() => handleFilterChange("Amount (Lowest)")}
-            >
-              Amount (Lowest)
-            </DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem
-              checked={selectedFilter === "Category (Income)"}
-              onClick={() => handleFilterChange("Category (Income)")}
-            >
-              Category (Income)
-            </DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem
-              checked={selectedFilter === "Category (Expense)"}
-              onClick={() => handleFilterChange("Category (Expense)")}
-            >
-              Category (Expense)
-            </DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem
-              checked={selectedFilter === "Category (Investement)"}
-              onClick={() => handleFilterChange("Category (Investement)")}
-            >
-              Category (Investment)
-            </DropdownMenuCheckboxItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        {location.pathname === "/dashboard/table" && (
+          <>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="sm" className="gap-2">
+                  <ListFilter className="h-5 w-5" />
+                  <span className="sr-only md:not-sr-only md:whitespace-nowrap">
+                    Filter
+                  </span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel>Filter by</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuCheckboxItem
+                  checked={selectedFilter === "All"}
+                  onClick={() => handleFilterChange("All")}
+                >
+                  All
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={selectedFilter === "Amount (Highest)"}
+                  onClick={() => handleFilterChange("Amount (Highest)")}
+                >
+                  Amount (Highest)
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={selectedFilter === "Amount (Lowest)"}
+                  onClick={() => handleFilterChange("Amount (Lowest)")}
+                >
+                  Amount (Lowest)
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={selectedFilter === "Category (Income)"}
+                  onClick={() => handleFilterChange("Category (Income)")}
+                >
+                  Category (Income)
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={selectedFilter === "Category (Expense)"}
+                  onClick={() => handleFilterChange("Category (Expense)")}
+                >
+                  Category (Expense)
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={selectedFilter === "Category (Investment)"}
+                  onClick={() => handleFilterChange("Category (Investment)")}
+                >
+                  Category (Investment)
+                </DropdownMenuCheckboxItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </>
+        )}
 
         {/* add button */}
         <Button

@@ -93,7 +93,7 @@ const DashLayout = () => {
       <Sidebar />
       <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
         <Header user={user} />
-        <main className="p-4 sm:px-6 sm:py-0 md:gap-8 container">
+        <main className="p-4 sm:px-6 sm:py-0 md:gap-8">
           <div className="max-w-5xl mx-auto">
             <Breadcrumb />
             <Outlet context={{ user, chartData, cardValues }} />
