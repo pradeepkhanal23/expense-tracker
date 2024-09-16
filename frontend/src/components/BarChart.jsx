@@ -1,19 +1,12 @@
-import { TrendingUp } from "lucide-react";
+import React from "react";
 import { Bar, BarChart, CartesianGrid, Rectangle, XAxis } from "recharts";
-
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { useOutletContext } from "react-router-dom";
 
 const chartConfig = {
   amount: {
@@ -33,15 +26,24 @@ const chartConfig = {
   },
 };
 
-export default function ExpenseBarChart({ data }) {
+export default function ExpenseBarChart() {
+  // Getting chartData from the useOutletContext
+  const { chartData } = useOutletContext();
+
+  // Ensuring chartData is not undefined or empty
+  const data = chartData && chartData.length > 0 ? chartData : [];
+
   return (
     <Card className="flex flex-col">
       <CardHeader>
         <CardTitle className="text-center">Bar Chart Overview</CardTitle>
       </CardHeader>
-      <CardContent className="flex-1 ">
+      <CardContent className="flex-1">
         <ChartContainer config={chartConfig}>
-          <BarChart accessibilityLayer data={data}>
+          <BarChart
+            data={chartData} // Safe fallback for empty data
+            margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+          >
             <CartesianGrid vertical={false} />
             <XAxis
               dataKey="category"
@@ -56,19 +58,20 @@ export default function ExpenseBarChart({ data }) {
             />
             <Bar
               dataKey="amount"
+              fill={({ payload }) =>
+                chartConfig[payload.category]?.color || "#8884d8"
+              }
               strokeWidth={2}
               radius={8}
-              activeBar={({ ...props }) => {
-                return (
-                  <Rectangle
-                    {...props}
-                    fillOpacity={0.8}
-                    stroke={props.payload.fill}
-                    strokeDasharray={4}
-                    strokeDashoffset={4}
-                  />
-                );
-              }}
+              activeShape={({ ...props }) => (
+                <Rectangle
+                  {...props}
+                  fillOpacity={0.8}
+                  stroke={props.payload.fill}
+                  strokeDasharray={4}
+                  strokeDashoffset={4}
+                />
+              )}
             />
           </BarChart>
         </ChartContainer>

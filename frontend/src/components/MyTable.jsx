@@ -199,15 +199,17 @@ const MyTable = () => {
       </Dialog>
 
       {/* Table */}
+
+      {/* search bar */}
+
       <div className="md:ml-auto flex items-center gap-x-2">
-        {/* search bar */}
-        <div className="relative w-full my-3">
-          <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+        <div className=" w-full my-3 relative">
           <Input
             type="search"
             placeholder="Search for transactions..."
-            className="w-full rounded-lg bg-background pl-8 max-w-sm ml-auto"
+            className="rounded-lg bg-background  max-w-sm ml-auto"
           />
+          {/* <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground " /> */}
         </div>
 
         {/* Filter Button */}
