@@ -7,6 +7,7 @@ import { GET_ME } from "../utils/queries";
 import { useToast } from "@/components/ui/use-toast";
 import { welcomeMessage } from "@/utils/helpers";
 import Skeleton from "@/components/Skeleton";
+import Breadcrumb from "@/components/Breadcrumb";
 
 const DashLayout = () => {
   const { toast } = useToast();
@@ -93,7 +94,10 @@ const DashLayout = () => {
       <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
         <Header user={user} />
         <main className="p-4 sm:px-6 sm:py-0 md:gap-8 container">
-          <Outlet context={{ user, chartData, cardValues }} />
+          <div className="max-w-5xl mx-auto">
+            <Breadcrumb />
+            <Outlet context={{ user, chartData, cardValues }} />
+          </div>
         </main>
       </div>
     </div>

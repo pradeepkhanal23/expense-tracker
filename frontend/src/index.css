@@ -5,9 +5,6 @@
 body {
   font-family: "Urbanist", "Figtree", serif;
 }
-html {
-  font-size: 105%;
-}
 
 @layer base {
   :root {

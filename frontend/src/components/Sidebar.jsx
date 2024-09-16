@@ -1,4 +1,4 @@
-import { Mountain, Home, Table, ChartPie, ChartLine } from "lucide-react";
+import { Mountain, Home, Table, ChartPie, ChartColumnBig } from "lucide-react";
 import {
   Tooltip,
   TooltipProvider,
@@ -61,7 +61,7 @@ const Sidebar = () => {
                 className={`flex h-9 w-9 items-center justify-center rounded-lg  text-accent-foreground transition-colors hover:bg-accent md:h-8 md:w-8 `}
               >
                 <ChartPie className="h-5 w-5" />
-                <span className="sr-only">PieChart</span>
+                <span className="sr-only">Pie Chart</span>
               </Link>
             </TooltipTrigger>
             <TooltipContent side="right">PieChart</TooltipContent>
@@ -74,11 +74,11 @@ const Sidebar = () => {
                 to="/dashboard/barchart"
                 className={`flex h-9 w-9 items-center justify-center rounded-lg  text-accent-foreground transition-colors hover:bg-accent md:h-8 md:w-8 `}
               >
-                <ChartLine className="h-5 w-5" />
-                <span className="sr-only">LineGraph</span>
+                <ChartColumnBig className="h-5 w-5" />
+                <span className="sr-only">Bar Graph</span>
               </Link>
             </TooltipTrigger>
-            <TooltipContent side="right">LineGraph</TooltipContent>
+            <TooltipContent side="right">Bar Graph</TooltipContent>
           </Tooltip>
         </TooltipProvider>
       </nav>

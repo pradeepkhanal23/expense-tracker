@@ -1,11 +1,4 @@
-import {
-  Pencil,
-  Trash,
-  PlusCircle,
-  ListFilter,
-  Search,
-  File,
-} from "lucide-react";
+import { Pencil, Trash, PlusCircle, ListFilter } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import {
   Table,
@@ -405,7 +398,7 @@ const MyTable = () => {
                       }
                       return (
                         <TableRow
-                          className="hover:bg-accent cursor-pointer  text-lg"
+                          className="hover:bg-accent cursor-pointer text-base"
                           key={i}
                         >
                           <TableCell className="table-cell capitalize text-gray-600 dark:text-white">

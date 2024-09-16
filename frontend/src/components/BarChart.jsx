@@ -41,7 +41,7 @@ export default function ExpenseBarChart() {
       <CardContent className="flex-1">
         <ChartContainer config={chartConfig}>
           <BarChart
-            data={chartData} // Safe fallback for empty data
+            data={data} // Safe fallback for empty data
             margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
           >
             <CartesianGrid vertical={false} />
