@@ -50,14 +50,35 @@ import Alert from "@/components/Alert";
 
 const MyTable = () => {
   const { toast } = useToast();
-  const [expenses, setExpenses] = useState(null);
+
+  // to store all the expenses got from the query
+  const [expenses, setExpenses] = useState([]);
+
+  // for modal handling
   const [open, setOpen] = useState(false);
+
+  // fetching the expenses from graphql
   const { data, error, loading } = useQuery(GET_EXPENSES);
+
+  // state to pick the expense during edit mode/delete mode
   const [activeExpense, setActiveExpense] = useState([]);
+
+  // dialog that helps to provide alert during deletion process
   const [alertDialogOpen, setAlertDialogOpen] = useState(false);
 
   // a flag to keep track of the edit mode so that we can conditionally render the title and other labels in the form
   const [editMode, setEditMode] = useState(false);
+
+  // states to handle the search and filter functionality in the table
+  const [filteredExpenses, setFilteredExpenses] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // State for tracking selected filter
+
+  // When the user selects a filter (e.g., "Amount (Highest)", "Category (Income)"), the filter choice is stored in the selectedFilter state. This state is updated via the setSelectedFilter function whenever a user clicks on a filter option.
+
+  // By storing the filter choice in a state variable, React can automatically re-render the component when the filter changes. This triggers the useEffect hook that depends on selectedFilter to re-filter the list of expenses based on the selected criteria.
+  const [selectedFilter, setSelectedFilter] = useState("");
 
   const openModal = (editMode = false) => {
     setEditMode(editMode);
@@ -88,6 +109,16 @@ const MyTable = () => {
       },
     ],
   });
+
+  // search term handler
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  // handler for filter button
+  const handleFilterChange = (filter) => {
+    setSelectedFilter(filter);
+  };
 
   // Add Transaction button handler
   const handleAddTransaction = () => {
@@ -149,9 +180,39 @@ const MyTable = () => {
     }
   };
 
+  // to get all the expenses and set filters to begin with
   useEffect(() => {
-    setExpenses(data?.expenses);
+    if (data?.expenses) {
+      setExpenses(data.expenses);
+      setFilteredExpenses(data.expenses);
+    }
   }, [data]);
+
+  // filter based on search bar and the filter button
+  useEffect(() => {
+    // Filter the expenses based on the search term and selected filter
+
+    // need to make sure we make a shallow copy of the expense arrya to prevent the error caused by attempting to modify a frozen or immutable array directly
+    let filtered = [...expenses];
+
+    if (searchTerm) {
+      filtered = filtered.filter((expense) =>
+        expense.description.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    if (selectedFilter === "Amount (Highest)") {
+      filtered = filtered.sort((a, b) => b.amount - a.amount);
+    } else if (selectedFilter === "Amount (Lowest)") {
+      filtered = filtered.sort((a, b) => a.amount - b.amount);
+    } else if (selectedFilter === "Category (Income)") {
+      filtered = filtered.filter((expense) => expense.category === "income");
+    } else if (selectedFilter === "Category (Expense)") {
+      filtered = filtered.filter((expense) => expense.category === "expense");
+    }
+
+    setFilteredExpenses(filtered);
+  }, [searchTerm, selectedFilter, expenses]);
 
   if (loading) {
     return (
@@ -208,6 +269,8 @@ const MyTable = () => {
             type="search"
             placeholder="Search for transactions..."
             className="rounded-lg bg-background  max-w-sm ml-auto"
+            value={searchTerm}
+            onChange={handleSearch}
           />
           {/* <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground " /> */}
         </div>
@@ -225,21 +288,30 @@ const MyTable = () => {
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Filter by</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuCheckboxItem checked>
+            <DropdownMenuCheckboxItem
+              checked={selectedFilter === "Amount (Highest)"}
+              onClick={() => handleFilterChange("Amount (Highest)")}
+            >
               Amount (Highest)
             </DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem>Amount (Lowest)</DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem>
+            <DropdownMenuCheckboxItem
+              checked={selectedFilter === "Amount (Lowest)"}
+              onClick={() => handleFilterChange("Amount (Lowest)")}
+            >
+              Amount (Lowest)
+            </DropdownMenuCheckboxItem>
+            <DropdownMenuCheckboxItem
+              checked={selectedFilter === "Category (Income)"}
+              onClick={() => handleFilterChange("Category (Income)")}
+            >
               Category (Income)
             </DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem>
+            <DropdownMenuCheckboxItem
+              checked={selectedFilter === "Category (Expense)"}
+              onClick={() => handleFilterChange("Category (Expense)")}
+            >
               Category (Expense)
             </DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem>
-              Category (Investment)
-            </DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem>Name (A-Z)</DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem>Name (Z-A)</DropdownMenuCheckboxItem>
           </DropdownMenuContent>
         </DropdownMenu>
 
@@ -254,7 +326,7 @@ const MyTable = () => {
           <span className=" sm:whitespace-nowrap ">Add Transaction</span>
         </Button>
       </div>
-      {expenses && expenses.length > 0 ? (
+      {filteredExpenses && filteredExpenses.length > 0 ? (
         <>
           <Card x-chunk="dashboard-05-chunk-3">
             <CardHeader className="px-7">
@@ -280,8 +352,8 @@ const MyTable = () => {
                 </TableHeader>
 
                 <TableBody>
-                  {expenses &&
-                    expenses.map((expense, i) => {
+                  {filteredExpenses &&
+                    filteredExpenses.map((expense, i) => {
                       let categoryStyle;
                       if (expense.category === "expense") {
                         categoryStyle = {
