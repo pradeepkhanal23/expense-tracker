@@ -1,4 +1,12 @@
-import { Pencil, Trash, PlusCircle } from "lucide-react";
+import {
+  Pencil,
+  Trash,
+  PlusCircle,
+  ListFilter,
+  Search,
+  File,
+} from "lucide-react";
+import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -7,6 +15,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuCheckboxItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import {
   Card,
   CardHeader,
@@ -183,10 +199,55 @@ const MyTable = () => {
       </Dialog>
 
       {/* Table */}
-      <div className="ml-auto flex items-center gap-x-2">
+
+      {/* search bar */}
+
+      <div className="md:ml-auto flex items-center gap-x-2">
+        <div className=" w-full my-3 relative">
+          <Input
+            type="search"
+            placeholder="Search for transactions..."
+            className="rounded-lg bg-background  max-w-sm ml-auto"
+          />
+          {/* <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground " /> */}
+        </div>
+
+        {/* Filter Button */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" size="sm" className="gap-2">
+              <ListFilter className="h-5 w-5" />
+              <span className="sr-only md:not-sr-only md:whitespace-nowrap">
+                Filter
+              </span>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>Filter by</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuCheckboxItem checked>
+              Amount (Highest)
+            </DropdownMenuCheckboxItem>
+            <DropdownMenuCheckboxItem>Amount (Lowest)</DropdownMenuCheckboxItem>
+            <DropdownMenuCheckboxItem>
+              Category (Income)
+            </DropdownMenuCheckboxItem>
+            <DropdownMenuCheckboxItem>
+              Category (Expense)
+            </DropdownMenuCheckboxItem>
+            <DropdownMenuCheckboxItem>
+              Category (Investment)
+            </DropdownMenuCheckboxItem>
+            <DropdownMenuCheckboxItem>Name (A-Z)</DropdownMenuCheckboxItem>
+            <DropdownMenuCheckboxItem>Name (Z-A)</DropdownMenuCheckboxItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        {/* add button */}
         <Button
           type="submit"
-          className="flex items-center gap-x-2 text-base"
+          className="flex items-center gap-x-2"
+          size="sm"
           onClick={handleAddTransaction}
         >
           <PlusCircle className="h-4 w-4" />

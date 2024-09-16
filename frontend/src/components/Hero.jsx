@@ -1,4 +1,4 @@
-import heroImg from "../assets/images/finance.jpg";
+import heroImg from "../assets/images/heroImg.png";
 import { Link } from "react-router-dom";
 import AuthService from "../utils/auth";
 import { Button } from "./ui/button";
@@ -14,7 +14,7 @@ const Hero = () => {
                 <h1 className="text-4xl lg:text-5xl font-bold tracking-normal ">
                   Take Control of Your Expenses
                 </h1>
-                <p className="text-justify text-muted-foreground md:text-lg tracking-wide">
+                <p className="text-justify text-muted-foreground md:text-lg tracking-normal lg:pr-5">
                   Our expense tracker helps you stay on top of your finances and
                   make informed decisions about your spending.
                 </p>
@@ -29,7 +29,7 @@ const Hero = () => {
               <img
                 src={heroImg}
                 alt="Hero Image"
-                className="w-full md:w-2/3 mx-auto lg:w-full lg:order-last  "
+                className="w-full md:w-2/3 mx-auto lg:w-full lg:order-last"
               />
             </div>
           </div>
