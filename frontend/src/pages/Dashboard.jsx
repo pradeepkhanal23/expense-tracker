@@ -8,8 +8,6 @@ import MyTable from "@/components/MyTable";
 const Dashboard = () => {
   const { user, chartData, cardValues } = useOutletContext();
 
-  console.log(location.pathname);
-
   return (
     <>
       {user && (

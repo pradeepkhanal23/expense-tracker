@@ -267,13 +267,15 @@ const MyTable = () => {
         <div className=" w-full my-3 relative">
           {location.pathname === "/dashboard/table" && (
             <>
-              <Input
-                type="search"
-                placeholder="Search for transactions..."
-                className="rounded-lg bg-background  max-w-sm ml-auto"
-                value={searchTerm}
-                onChange={handleSearch}
-              />
+              {expenses && expenses.length > 0 && (
+                <Input
+                  type="search"
+                  placeholder="Search for transactions..."
+                  className="rounded-lg bg-background  max-w-sm ml-auto"
+                  value={searchTerm}
+                  onChange={handleSearch}
+                />
+              )}
             </>
           )}
           {/* <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground " /> */}
@@ -282,56 +284,58 @@ const MyTable = () => {
         {/* Filter Button */}
         {location.pathname === "/dashboard/table" && (
           <>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="sm" className="gap-2">
-                  <ListFilter className="h-5 w-5" />
-                  <span className="sr-only md:not-sr-only md:whitespace-nowrap">
-                    Filter
-                  </span>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuLabel>Filter by</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuCheckboxItem
-                  checked={selectedFilter === "All"}
-                  onClick={() => handleFilterChange("All")}
-                >
-                  All
-                </DropdownMenuCheckboxItem>
-                <DropdownMenuCheckboxItem
-                  checked={selectedFilter === "Amount (Highest)"}
-                  onClick={() => handleFilterChange("Amount (Highest)")}
-                >
-                  Amount (Highest)
-                </DropdownMenuCheckboxItem>
-                <DropdownMenuCheckboxItem
-                  checked={selectedFilter === "Amount (Lowest)"}
-                  onClick={() => handleFilterChange("Amount (Lowest)")}
-                >
-                  Amount (Lowest)
-                </DropdownMenuCheckboxItem>
-                <DropdownMenuCheckboxItem
-                  checked={selectedFilter === "Category (Income)"}
-                  onClick={() => handleFilterChange("Category (Income)")}
-                >
-                  Category (Income)
-                </DropdownMenuCheckboxItem>
-                <DropdownMenuCheckboxItem
-                  checked={selectedFilter === "Category (Expense)"}
-                  onClick={() => handleFilterChange("Category (Expense)")}
-                >
-                  Category (Expense)
-                </DropdownMenuCheckboxItem>
-                <DropdownMenuCheckboxItem
-                  checked={selectedFilter === "Category (Investment)"}
-                  onClick={() => handleFilterChange("Category (Investment)")}
-                >
-                  Category (Investment)
-                </DropdownMenuCheckboxItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            {expenses && expenses.length > 0 && (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="sm" className="gap-2">
+                    <ListFilter className="h-5 w-5" />
+                    <span className="sr-only md:not-sr-only md:whitespace-nowrap">
+                      Filter
+                    </span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuLabel>Filter by</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuCheckboxItem
+                    checked={selectedFilter === "All"}
+                    onClick={() => handleFilterChange("All")}
+                  >
+                    All
+                  </DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem
+                    checked={selectedFilter === "Amount (Highest)"}
+                    onClick={() => handleFilterChange("Amount (Highest)")}
+                  >
+                    Amount (Highest)
+                  </DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem
+                    checked={selectedFilter === "Amount (Lowest)"}
+                    onClick={() => handleFilterChange("Amount (Lowest)")}
+                  >
+                    Amount (Lowest)
+                  </DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem
+                    checked={selectedFilter === "Category (Income)"}
+                    onClick={() => handleFilterChange("Category (Income)")}
+                  >
+                    Category (Income)
+                  </DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem
+                    checked={selectedFilter === "Category (Expense)"}
+                    onClick={() => handleFilterChange("Category (Expense)")}
+                  >
+                    Category (Expense)
+                  </DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem
+                    checked={selectedFilter === "Category (Investment)"}
+                    onClick={() => handleFilterChange("Category (Investment)")}
+                  >
+                    Category (Investment)
+                  </DropdownMenuCheckboxItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
           </>
         )}
 
@@ -348,7 +352,7 @@ const MyTable = () => {
       </div>
       {filteredExpenses && filteredExpenses.length > 0 ? (
         <>
-          <Card x-chunk="dashboard-05-chunk-3">
+          <Card x-chunk="dashboard-05-chunk-3" className="mt-3">
             <CardHeader className="px-7">
               <CardTitle>Expenses</CardTitle>
               <CardDescription className="text-md">
@@ -460,7 +464,7 @@ const MyTable = () => {
         </>
       ) : (
         <>
-          <p className="text-center text-lg text-muted-foreground">
+          <p className="text-center text-base text-muted-foreground">
             There is no data to display. Please add some transactions.
           </p>
         </>

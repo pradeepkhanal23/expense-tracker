@@ -1,4 +1,4 @@
-import { SlashIcon } from "lucide-react";
+import { SlashIcon, House } from "lucide-react";
 import { useLocation, Link } from "react-router-dom";
 import {
   Breadcrumb,
@@ -23,6 +23,7 @@ export default function BreadCrumb() {
           <Breadcrumb>
             <BreadcrumbList>
               <BreadcrumbItem>
+                <House className="h-4 w-4" />
                 <Link to={`/dashboard`}>Dashboard</Link>
               </BreadcrumbItem>
               <BreadcrumbSeparator>
@@ -47,8 +48,8 @@ export default function BreadCrumb() {
           <Breadcrumb>
             <BreadcrumbList>
               <BreadcrumbItem>
-                <BreadcrumbPage>
-                  {" "}
+                <BreadcrumbPage className="flex items-center gap-x-2">
+                  <House className="h-4 w-4" />
                   <BreadcrumbLink to={`/dashboard`}>Dashboard</BreadcrumbLink>
                 </BreadcrumbPage>
               </BreadcrumbItem>
