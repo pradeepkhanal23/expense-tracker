@@ -58,7 +58,9 @@ const Sidebar = () => {
             <TooltipTrigger asChild>
               <Link
                 to="/dashboard/piechart"
-                className={`flex h-9 w-9 items-center justify-center rounded-lg  text-accent-foreground transition-colors hover:bg-accent md:h-8 md:w-8 `}
+                className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors hover:bg-accent  md:h-8 md:w-8 ${
+                  location.pathname === "/dashboard/piechart" ? "bg-accent" : ""
+                } `}
               >
                 <ChartPie className="h-5 w-5" />
                 <span className="sr-only">Pie Chart</span>
@@ -72,7 +74,9 @@ const Sidebar = () => {
             <TooltipTrigger asChild>
               <Link
                 to="/dashboard/barchart"
-                className={`flex h-9 w-9 items-center justify-center rounded-lg  text-accent-foreground transition-colors hover:bg-accent md:h-8 md:w-8 `}
+                className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors hover:bg-accent  md:h-8 md:w-8 ${
+                  location.pathname === "/dashboard/barchart" ? "bg-accent" : ""
+                } `}
               >
                 <ChartColumnBig className="h-5 w-5" />
                 <span className="sr-only">Bar Graph</span>
